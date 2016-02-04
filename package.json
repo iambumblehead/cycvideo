@@ -1,0 +1,40 @@
+{
+  "name": "cycle-video",
+  "version": "0.0.1",
+  "description": "cycle-video",
+  "main": "index.js",
+  "scripts": {
+    "test": ":",
+    "start": "NODE_ENV=production babel-node .",
+    "build": "NODE_ENV=production webpack -p --config ./pro.babel.js",
+    "dev": "NODE_ENV=development babel-node .",
+    
+    "start": "NODE_ENV=development babel-node ."
+  },
+  "keywords": [
+    "cycle-video"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-core": "^6.4.0",
+    "babel-loader": "^6.2.1",
+    "chokidar": "^1.4.2",
+    "webpack": "^1.12.10",
+    "webpack-dev-middleware": "^1.4.0",
+    "webpack-hot-middleware": "^2.6.0"
+  },
+  "dependencies": {
+    "@cycle/core": "^6.0.0",
+    "@cycle/dom": "^9.0.1",
+    "rx-dom" : "^7.0.3",
+    
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-stage-0": "^6.3.13",
+    "compression": "^1.6.0",
+    "express": "^4.13.3",
+    "rx": "^4.0.7",
+    "virtual-dom": "^2.1.1",
+    "combine-latest-obj": "^1.0.2"
+  }
+}
