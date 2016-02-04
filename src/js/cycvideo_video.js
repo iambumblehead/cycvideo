@@ -1,24 +1,12 @@
 // Filename: cycvideo_video.js  
-// Timestamp: 2016.02.03-17:30:42 (last modified)
+// Timestamp: 2016.02.04-09:42:12 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>  
 
 import {video} from '@cycle/dom';
 
-// how should pause and play stqte be applied to the video
-
 function view(state$) {
   return state$.map(
     vals =>
-      /*
-      (function () {
-        var myvideo = typeof document === 'object' && document.getElementById('cycvideo_video');
-        if (myvideo) {
-          if (state$.playstate === 'play') {
-            myvideo.play();
-          }
-        }
-      }()),
-       */
       video('.cycvideo_video #cycvideo_video', {
         crossOrigin : 'anonymous',
         playsinline : 'playsinline',        
@@ -36,14 +24,3 @@ function view(state$) {
 export default {
   view : view
 };
-
-
-
-
-
-
-
-
-
-
-

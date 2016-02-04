@@ -35,6 +35,6 @@
     "express": "^4.13.3",
     "rx": "^4.0.7",
     "virtual-dom": "^2.1.1",
-    "combine-latest-obj": "^1.0.2"
+    "rx-combine-latest-obj": "^1.0.2"
   }
 }

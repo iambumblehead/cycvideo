@@ -1,5 +1,5 @@
-// Filename: mvi.js  
-// Timestamp: 2016.02.03-18:59:49 (last modified)
+// Filename: cycvideo.js  
+// Timestamp: 2016.02.04-09:40:20 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>
 
 import Rx from 'rx-dom';
@@ -19,7 +19,6 @@ function renderSlider(label, value, unit, id, min, max) {
 }
 
 function renderWeightSlider(weight) {
-  console.log('render it');
   return renderSlider('Weight', weight, 'kg', 'weight', 40, 140);
 }
 
@@ -31,12 +30,12 @@ function getSliderEvent(DOM, id) {
   return DOM.select('#' + id).events('input').map(ev => ev.target.value);
 }
 
-function intent(DOM) {
+function intent(DOM, DOMVIDEO) {
   return {
     changeWeight$: getSliderEvent(DOM, 'weight'),
     changeHeight$: getSliderEvent(DOM, 'height'),
     playstate$ : Rx.Observable.merge(
-      DOM.select('.cycvideo_bttnplay').events('click').map(ev => 'play'),
+      DOM.select('#uidcycvideo_bttnplay').events('click').map(ev => ev).map(n => { console.log('play', n.target); return 'play';}),
       DOM.select('.cycvideo_bttnpause').events('click').map(ev => 'pause'),
       DOM.select('.cycvideo_bttnload').events('click').map(ev => 'load')      
     )
@@ -44,6 +43,7 @@ function intent(DOM) {
 }
 
 function model(actions) {
+  //return Rx.Observable.merge(
   return Rx.Observable.combineLatest(
     actions.changeWeight$.startWith(70),
     actions.changeHeight$.startWith(170),
