@@ -1,5 +1,5 @@
 // Filename: cycvideo_video.js  
-// Timestamp: 2016.02.04-09:42:12 (last modified)
+// Timestamp: 2016.02.04-17:00:39 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>  
 
 import {video} from '@cycle/dom';
@@ -16,7 +16,7 @@ function view(state$) {
         width       : 640,
         height      : 480,
         autoplay    : state$.autoplay,
-        poster      : state$.poster,
+        poster      : state$.poster || '',
         loop        : state$.loop
       }));
 }
