@@ -1,8 +1,9 @@
 {
-  "name": "cycle-video",
+  "name": "cycvideo",
   "version": "0.0.1",
-  "description": "cycle-video",
+  "description": "cycvideo",
   "main": "index.js",
+  "repository" : "https://github.com/iambumblehead/cycvideo",
   "scripts": {
     "test": ":",
     "start": "NODE_ENV=production babel-node .",
@@ -28,6 +29,7 @@
     "@cycle/core": "^6.0.0",
     "@cycle/dom": "^9.0.1",
     "rx-dom" : "^7.0.3",
+    "fromnodeprogresscallback" : "^0.0.1",
     
     "babel-preset-es2015": "^6.3.13",
     "babel-preset-stage-0": "^6.3.13",
