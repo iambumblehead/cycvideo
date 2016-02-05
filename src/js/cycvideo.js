@@ -1,5 +1,5 @@
 // Filename: cycvideo.js  
-// Timestamp: 2016.02.04-16:58:18 (last modified)
+// Timestamp: 2016.02.04-18:49:12 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>
 
 import Rx from 'rx-dom';
@@ -72,7 +72,8 @@ function intent(DOM) {
   return {
     changeWeight$: getSliderEvent(DOM, 'weight'),
     changeHeight$: getSliderEvent(DOM, 'height'),
-    playstate$ : playstate$
+    playstate$ : playstate$,
+    wharr$ : Rx.Observable.just([640, 480])
   };
 }
 
@@ -87,8 +88,10 @@ function model(actions) {
     actions.changeWeight$.startWith(70),
     actions.changeHeight$.startWith(170),
     actions.playstate$.startWith('load'),
-    (weight, height, playstate) => {
-      return {weight, height, playstate};
+    actions.wharr$,
+    //actions.w$.startsWith(640),
+    (weight, height, playstate, wharr) => {
+      return {weight, height, playstate, wharr};
     }
   );
 }
@@ -102,13 +105,13 @@ function model(actions) {
 // load cat video
 // observe the statestream
 function view(state$) {
-  return state$.map(({weight, height, playstate}) => div('#cyclevideo .cyclevideo', [
+  return state$.map(({weight, height, playstate, wharr}) => div('#cyclevideo .cyclevideo', [
     renderWeightSlider(weight),
     renderHeightSlider(height),
     cycvideo_bttnplay.view(state$),
     cycvideo_bttnpause.view(state$),
     cycvideo_bttnload.view(state$),
-    cycvideo_video.view(state$),
+    cycvideo_video.view(state$, wharr),
     
     h2('State is ' + playstate)
   ]));

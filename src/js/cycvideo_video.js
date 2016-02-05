@@ -1,20 +1,19 @@
 // Filename: cycvideo_video.js  
-// Timestamp: 2016.02.04-17:00:39 (last modified)
+// Timestamp: 2016.02.04-18:48:58 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>  
 
 import {video} from '@cycle/dom';
 
-function view(state$) {
+function view(state$, wharr) {
+
   return state$.map(
     vals =>
       video('.cycvideo_video #cycvideo_video', {
         crossOrigin : 'anonymous',
         playsinline : 'playsinline',        
-        //width       : state$.wharr[0],
-        //height      : state$.wharr[1],
         src         : 'http://d8d913s460fub.cloudfront.net/videoserver/cat-test-video-320x240.mp4',
-        width       : 640,
-        height      : 480,
+        width       : wharr[0],
+        height      : wharr[1],
         autoplay    : state$.autoplay,
         poster      : state$.poster || '',
         loop        : state$.loop
