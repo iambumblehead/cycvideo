@@ -1,5 +1,5 @@
 // Filename: cycvideo.js  
-// Timestamp: 2016.02.04-23:00:47 (last modified)
+// Timestamp: 2016.02.04-23:28:27 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>
 
 import Rx from 'rx-dom';
@@ -88,7 +88,7 @@ function intent(DOM) {
     changeHeight$: getSliderEvent(DOM, 'height'),
     playstate$ : Rx.Observable.merge(
       playstate$,
-      blob$.map(e => 'pause')),
+      blob$.map(e => e.length ? 'pause' : 'load')),
     blob$ : blob$,
     wharr$ : Rx.Observable.just([640, 480])
   };
