@@ -1,21 +1,17 @@
 // Filename: cycvideo.js  
-// Timestamp: 2016.02.04-18:49:12 (last modified)
+// Timestamp: 2016.02.04-23:00:47 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>
 
 import Rx from 'rx-dom';
 import { h } from '@cycle/dom';
 import xdrgo from 'xdrgo';
 import {div, span, input, h2, makeDOMDriver} from '@cycle/dom';
-
-import cycvideo_bttnplay from './cycvideo_bttnplay';
-import cycvideo_bttnpause from './cycvideo_bttnpause';
-import cycvideo_bttnload from './cycvideo_bttnload';
+import cycvideo_bttngroup from './cycvideo_bttngroup';
 import cycvideo_video from './cycvideo_video';
 import cycvideo_req from './cycvideo_req';
 
 // http://staltz.com/unidirectional-user-interface-architectures.html
 // https://github.com/Reactive-Extensions/RxJS/blob/master/doc/gettingstarted/callbacks.md
-
 
 function renderSlider(label, value, unit, id, min, max) {
   return div([
@@ -43,24 +39,41 @@ function getSliderEvent(DOM, id) {
 //
 function intent(DOM) {
 
+  //   Cold observables start running upon subscription, i.e., the observable
+  // sequence only starts pushing values to the observers when Subscribe is
+  // called. Values are also not shared among subscribers. This is different
+  // from hot observables such as mouse move events or stock tickers which are
+  // already producing values even before a subscription is active. When an
+  // observer subscribes to a hot observable sequence, it will get the current
+  // value in the stream. The hot observable sequence is shared among all
+  // subscribers, and each subscriber is pushed the next value in the sequence.
+  // For example, even if no one has subscribed to a particular stock ticker,
+  // the ticker will continue to update its value based on market movement.
   var playstate$ = Rx.Observable.merge(
     DOM.select('#uidcycvideo_bttnplay').events('click').map(ev => 'play'),
     DOM.select('.cycvideo_bttnpause').events('click').map(ev => 'pause'),
     DOM.select('.cycvideo_bttnload').events('click').map(ev => 'load')      
   );
 
+  var blob$;
   if (typeof document === 'object') {
-    cycvideo_req.getblob$({
+    blob$ = cycvideo_req.getblob$({
       url :'http://d8d913s460fub.cloudfront.net/videoserver/cat-test-video-320x240.mp4'
-    }).subscribe(
+    });
+
+    //blob$ = blob$.publish();
+    
+    blob$.subscribe(
       function (e) { console.log(e.type === 'progress' ? (e.loaded/e.total) * 100 : e); },
       function (e) { console.log('onError: %s', e); },
-      function ()  { console.log('onCompleted'); });
-  }  
-  
+      function ()  { console.log('onCompleted'); }
+    );
+
+  } else {
+    blob$ = Rx.Observable.just('');
+  }
   
   playstate$.subscribe(function (s) {
-    console.log('subscriber... ', s);
     if (s === 'play') {
       document.getElementsByTagName('video')[0].play();
     } else if (s === 'pause') {
@@ -68,11 +81,15 @@ function intent(DOM) {
     }
     return s;
   });
-    
+
+  // load should change to 'pause'  
   return {
     changeWeight$: getSliderEvent(DOM, 'weight'),
     changeHeight$: getSliderEvent(DOM, 'height'),
-    playstate$ : playstate$,
+    playstate$ : Rx.Observable.merge(
+      playstate$,
+      blob$.map(e => 'pause')),
+    blob$ : blob$,
     wharr$ : Rx.Observable.just([640, 480])
   };
 }
@@ -88,10 +105,11 @@ function model(actions) {
     actions.changeWeight$.startWith(70),
     actions.changeHeight$.startWith(170),
     actions.playstate$.startWith('load'),
+    actions.blob$.startWith(''),
     actions.wharr$,
     //actions.w$.startsWith(640),
-    (weight, height, playstate, wharr) => {
-      return {weight, height, playstate, wharr};
+    (weight, height, playstate, blob, wharr) => {
+      return {weight, height, playstate, blob, wharr};
     }
   );
 }
@@ -105,20 +123,14 @@ function model(actions) {
 // load cat video
 // observe the statestream
 function view(state$) {
-  return state$.map(({weight, height, playstate, wharr}) => div('#cyclevideo .cyclevideo', [
+  return state$.map(({weight, height, playstate, blob, wharr}) => div('#cyclevideo .cyclevideo', [
     renderWeightSlider(weight),
     renderHeightSlider(height),
-    cycvideo_bttnplay.view(state$),
-    cycvideo_bttnpause.view(state$),
-    cycvideo_bttnload.view(state$),
-    cycvideo_video.view(state$, wharr),
+    cycvideo_bttngroup.view(state$, playstate),
+    cycvideo_video.view(state$, blob, wharr),
     
     h2('State is ' + playstate)
   ]));
 }
-
-typeof document === 'object' && (function () {
-  console.log('go!');
-}());
 
 export default DOM => view(model(intent(DOM)));

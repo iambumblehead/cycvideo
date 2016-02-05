@@ -1,10 +1,22 @@
 /* Filename: bundle.css  
- * Timestamp: 2016.02.03-17:13:28 (last modified)
+ * Timestamp: 2016.02.04-23:09:08 (last modified)
  * Author(s): bumblehead <chris@bumblehead.com>  
  */
 
 /* styles taken from fsgo video...
  */
+
+
+.cycvideo_bttngroup .cycvideo_bttnplay,
+.cycvideo_bttngroup .cycvideo_bttnpause,
+.cycvideo_bttngroup .cycvideo_bttnload {
+    display:none;
+}
+.cycvideo_bttngroup-play  .cycvideo_bttnpause,
+.cycvideo_bttngroup-pause .cycvideo_bttnplay,
+.cycvideo_bttngroup-load  .cycvideo_bttnload {
+    display:inline-block;
+}
 
 
 /* BTTNPLAY
