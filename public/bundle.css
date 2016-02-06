@@ -1,11 +1,17 @@
 /* Filename: bundle.css  
- * Timestamp: 2016.02.04-23:09:08 (last modified)
+ * Timestamp: 2016.02.05-11:35:05 (last modified)
  * Author(s): bumblehead <chris@bumblehead.com>  
  */
 
 /* styles taken from fsgo video...
  */
-
+/*
+.fsgo-video-layer-control-bg {
+    background-color:#333;    
+    opacity: 0.4;
+    position:absolute;
+    top:0;left:0;right:0;bottom:0;
+}*/
 
 .cycvideo_bttngroup .cycvideo_bttnplay,
 .cycvideo_bttngroup .cycvideo_bttnpause,

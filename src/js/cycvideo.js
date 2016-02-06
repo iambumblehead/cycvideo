@@ -1,5 +1,5 @@
 // Filename: cycvideo.js  
-// Timestamp: 2016.02.04-23:28:27 (last modified)
+// Timestamp: 2016.02.05-18:08:25 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>
 
 import Rx from 'rx-dom';
@@ -7,6 +7,11 @@ import { h } from '@cycle/dom';
 import xdrgo from 'xdrgo';
 import {div, span, input, h2, makeDOMDriver} from '@cycle/dom';
 import cycvideo_bttngroup from './cycvideo_bttngroup';
+import cycvideo_labelindicator from './cycvideo_labelindicator';
+import cycvideo_slideseek from './cycvideo_slideseek';
+import cycvideo_dropfillmode from './cycvideo_dropfillmode';
+import cycvideo_dropvrmode from './cycvideo_dropvrmode';
+import cycvideo_buffer from './cycvideo_buffer';
 import cycvideo_video from './cycvideo_video';
 import cycvideo_req from './cycvideo_req';
 
@@ -55,16 +60,27 @@ function intent(DOM) {
     DOM.select('.cycvideo_bttnload').events('click').map(ev => 'load')      
   );
 
+  var fillmode$ =  Rx.Observable.merge(
+    DOM.select('#uidcycvideo_dropfillmode').events('change').pluck('target','value')//.map(ev => 'fill')
+  );
+
+  var vrmode$ =  Rx.Observable.merge(
+    DOM.select('#uidcycvideo_dropvrmode').events('change').pluck('target', 'value')
+  );
+
+  // indicator, includes fulltime and seek time
+  var indicator$ = Rx.Observable.just('');    
+
   var blob$;
   if (typeof document === 'object') {
     blob$ = cycvideo_req.getblob$({
       url :'http://d8d913s460fub.cloudfront.net/videoserver/cat-test-video-320x240.mp4'
     });
-
+    // use slider...
     //blob$ = blob$.publish();
     
     blob$.subscribe(
-      function (e) { console.log(e.type === 'progress' ? (e.loaded/e.total) * 100 : e); },
+      function (e) { console.log('blog$ progress ' + e.type === 'progress' ? (e.loaded/e.total) * 100 : e); },
       function (e) { console.log('onError: %s', e); },
       function ()  { console.log('onCompleted'); }
     );
@@ -72,6 +88,56 @@ function intent(DOM) {
   } else {
     blob$ = Rx.Observable.just('');
   }
+
+  var progress$ = Rx.Observable.merge(
+    blob$
+  ).map((ev) => {
+    return typeof ev === 'object' ? (ev.loaded/ev.total) * 100 : 100;
+  }).filter(ev => ev).map(ev => typeof ev === 'number' ? ev : 100);
+
+  // 'progress', 'timeupdate', 'canplay', 'play', 'pause'
+  // seek, includes progress and seek area
+
+  var timeupdate$ = Rx.Observable.merge(
+    typeof document === 'object' ?
+      Rx.DOM.fromEvent(document.getElementById('cycvideo_video'), 'timeupdate') :
+      DOM.select('#cycvideo_video').events('timeupdate')
+  ).map((ev) => {
+    console.log('timeupdate$');
+    
+    return ev;
+  });
+  
+  var seek$ = Rx.Observable.just('');
+
+  
+  var buffer$ = Rx.Observable.merge(
+    timeupdate$
+  ).pluck('target').map(function (videoelem) {
+    var videobuff = cycvideo_buffer.get_buffer_state(videoelem);
+
+    console.log('buffer', videobuff);
+    
+    return videobuff;
+  });
+//  ).map(function (e) {
+//  });
+  
+  /*
+    //DOM.select('#cycvideo_video').events('timeupdate').pluck('target', 'value')
+    DOM.select('#cycvideo_video').events('timeupdate').map(function (e) {
+        var videoelem = o.get_video_elem(player),
+            videobuff = fsgoplayer_buffer.player_get_buffer_state(videoelem),
+            fulltimeelem = o.get_video_layer_control_fulltime_elem(player),
+            seektimeelem = o.get_video_layer_control_seektime_elem(player),
+    })
+*/
+//  );
+  
+
+  // add load circle??
+  // seek comes from
+  
   
   playstate$.subscribe(function (s) {
     if (s === 'play') {
@@ -84,12 +150,19 @@ function intent(DOM) {
 
   // load should change to 'pause'  
   return {
-    changeWeight$: getSliderEvent(DOM, 'weight'),
-    changeHeight$: getSliderEvent(DOM, 'height'),
+    //.pluck('target','value')
+    fillmode$: fillmode$,
+    vrmode$: vrmode$,    
+    //changeWeight$: getSliderEvent(DOM, 'weight'),
+    //changeHeight$: getSliderEvent(DOM, 'height'),
+    buffer$ : buffer$,
     playstate$ : Rx.Observable.merge(
       playstate$,
       blob$.map(e => e.length ? 'pause' : 'load')),
+    progress$ : progress$,
     blob$ : blob$,
+    seek$ : seek$,
+    indicator$ : indicator$,    
     wharr$ : Rx.Observable.just([640, 480])
   };
 }
@@ -102,14 +175,26 @@ function intent(DOM) {
 function model(actions) {
   //return Rx.Observable.merge(
   return Rx.Observable.combineLatest(
-    actions.changeWeight$.startWith(70),
-    actions.changeHeight$.startWith(170),
+    //actions.changeWeight$.startWith(70),
+    //actions.changeHeight$.startWith(170),
     actions.playstate$.startWith('load'),
+    actions.progress$.startWith(0),    
     actions.blob$.startWith(''),
+    actions.buffer$.startWith({
+      load_percent : 0.0,
+      seek_percent : 0.0
+    }),
+    actions.seek$.startWith(''),
+    actions.indicator$.startWith(''),
+    
     actions.wharr$,
+    actions.fillmode$.startWith('fitted'),
+    actions.vrmode$.startWith('flat'),
     //actions.w$.startsWith(640),
-    (weight, height, playstate, blob, wharr) => {
-      return {weight, height, playstate, blob, wharr};
+    //(weight, height, playstate, blob, seek, indicator, wharr, fillmode, vrmode) => {
+    //  return {weight, height, playstate, blob, seek, indicator, wharr, fillmode, vrmode};
+    (playstate, progress, blob, buffer, seek, indicator, wharr, fillmode, vrmode) => {
+      return {playstate, progress, blob, buffer, seek, indicator, wharr, fillmode, vrmode};    
     }
   );
 }
@@ -123,11 +208,18 @@ function model(actions) {
 // load cat video
 // observe the statestream
 function view(state$) {
-  return state$.map(({weight, height, playstate, blob, wharr}) => div('#cyclevideo .cyclevideo', [
-    renderWeightSlider(weight),
-    renderHeightSlider(height),
+  //return state$.map(({weight, height, playstate, blob, seek, indicator, wharr, fillmode, vrmode}) => div('#cyclevideo .cyclevideo', [
+  return state$.map(({playstate, progress, blob, buffer, seek, indicator, wharr, fillmode, vrmode}) => div('#cyclevideo .cyclevideo', [
+    //renderWeightSlider(weight),
+    //renderHeightSlider(height),
+    
     cycvideo_bttngroup.view(state$, playstate),
+    cycvideo_dropfillmode.view(state$, fillmode),
+    cycvideo_dropvrmode.view(state$, vrmode),    
     cycvideo_video.view(state$, blob, wharr),
+    cycvideo_labelindicator.view(state$, indicator),
+    cycvideo_slideseek.view(state$, buffer, progress, seek),    
+
     
     h2('State is ' + playstate)
   ]));

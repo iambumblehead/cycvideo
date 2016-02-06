@@ -1,8 +1,8 @@
 // Filename: cycvideo_bttnplay.js  
-// Timestamp: 2016.02.04-16:54:46 (last modified)
+// Timestamp: 2016.02.05-11:43:38 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>  
 
-import {label, span, button, makeDOMDriver} from '@cycle/dom';
+import {label, span } from '@cycle/dom';
 
 function view(state$) {
   return state$.map(
