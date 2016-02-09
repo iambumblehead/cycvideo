@@ -1,5 +1,5 @@
 // Filename: cycvideo.js  
-// Timestamp: 2016.02.09-05:35:43 (last modified)
+// Timestamp: 2016.02.09-10:41:59 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>
 
 import rx from 'rx-dom';
@@ -139,6 +139,7 @@ function model(actions) {
 // observe the statestream
 function view(state$) {
   return state$.map(({opts, playstate, progress, blob, buffer, seek,  wharr, minmaxgroup, fillmode, vrmode}) => {
+    
     return div('.cycvideo', [
       cycvideo_video.view(state$, opts, playstate, blob, wharr),
       
@@ -172,15 +173,15 @@ export default DOM => view(model(intent(DOM, cycvideo_opts({
   srcarr : [
     'http://d8d913s460fub.cloudfront.net/videoserver/cat-test-video-320x240.mp4'
   ],
-  istesting : true,
-  isstats : true,
+  istesting   : true,
+  isstats     : true,
   isxhrloaded : true,
-  iscontrols : false,
-  autoplay : true,
-  loop : true
-  //poster : fsgovrpg_feed.getProgramFittedThumbnail(program, videoelem),
-  //fillmode : fsgoplayer.fillmode_fill,
-  //vrmode   : fsgoplayer.vrmode_panorama
+  iscontrols  : false,
+  autoplay    : true,
+  loop        : true
+  //poster : feed.getProgramFittedThumbnail(program, videoelem),
+  //fillmode : cyclvideo_opts.fillmode_fill,
+  //vrmode   : cyclvideo_opts.vrmode_panorama
   
 
 }))));
