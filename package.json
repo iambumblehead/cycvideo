@@ -28,6 +28,10 @@
   "dependencies": {
     "@cycle/core": "^6.0.0",
     "@cycle/dom": "^9.0.1",
+    "domwh" : "^0.0.5",
+    "domev" : "~0.0.x",
+    "ismobilejs" : "~0.3.x",
+    
     "rx-dom": "^7.0.3",
     "fromnodeprogresscallback": "^0.0.1",
     "xdrgo": "^0.0.1",

@@ -1,10 +1,11 @@
 // Filename: cycvideo_bttnpause.js  
-// Timestamp: 2016.02.03-15:54:27 (last modified)
+// Timestamp: 2016.02.08-17:27:32 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>
 //
 // not really a button.
 
-import {label, span, button, makeDOMDriver} from '@cycle/dom';
+import {label, span} from '@cycle/dom';
+import Rx from 'rx-dom';
 
 function view(state$) {
   return state$.map(
@@ -14,6 +15,13 @@ function view(state$) {
       ]));
 }
 
+function streams(DOM, opts) {
+  return {
+    click : DOM.select('.cycvideo_bttnload').events('click')
+  };
+}
+
 export default {
-  view : view
+  view : view,
+  streams : streams
 };

@@ -1,8 +1,8 @@
 // Filename: cycvideo_bttnplay.js  
-// Timestamp: 2016.02.05-11:43:38 (last modified)
+// Timestamp: 2016.02.08-17:28:43 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>  
 
-import {label, span } from '@cycle/dom';
+import {label, span} from '@cycle/dom';
 
 function view(state$) {
   return state$.map(
@@ -12,6 +12,13 @@ function view(state$) {
       ]));
 }
 
+function streams(DOM, opts) {
+  return {
+    click : DOM.select('.cycvideo_bttnplay').events('click')
+  };
+}
+
 export default {
-  view : view
+  view : view,
+  streams : streams  
 };

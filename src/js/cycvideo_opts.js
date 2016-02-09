@@ -1,6 +1,9 @@
 // Filename: cycvideo_opts.js  
-// Timestamp: 2016.02.05-21:21:11 (last modified)
+// Timestamp: 2016.02.08-14:23:19 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>
+
+import cycvideo_aspect from './cycvideo_aspect';
+import ismobilejs from 'ismobilejs';
 
 var cycvideo_opts = module.exports = (function (o) {
 
@@ -29,7 +32,7 @@ var cycvideo_opts = module.exports = (function (o) {
 
     return defval;
   };
-
+/*
   o.fillmodearr = [
     o.fillmode_fitted = "fillmode-fitted",
     o.fillmode_full   = "fillmode-full",
@@ -92,28 +95,29 @@ var cycvideo_opts = module.exports = (function (o) {
     }
     //return fsgoplayer_webvrscene[id.split('vrmode-')[1]];
   };
-  
+*/  
   o.get = function (opt) {
     var finopt = {};
 
     opt = opt || {};
 
-    if (!(opt.elem || opt.elem instanceof Element)) {
-      throw new Error('invalid elem');
-    }
-
-    finopt.uid = ++o.incr;
+    finopt.uid = opt.uid || ++o.incr;
     finopt.elem = opt.elem;
     
-    //finopt.vrmode = o.getasstring(opt.vrmode, o.vrmode_flat);
-    finopt.vrmode = opt.vrmode || o.vrmode_flat;//o.getasstring(opt.vrmode, o.vrmode_flat);
+    finopt.vrmode = opt.vrmode || o.vrmode_flat;
     finopt.fillmode = o.getasstring(opt.fillmode, o.fillmode_fitted);
     finopt.poster = o.getasstring(opt.poster, '');    
     
     finopt.srcarr = o.getasarr(opt.srcarr, []);
-    finopt.wharr = o.getasarr(fsgoplayer_aspect.nearestwindow_truewh(opt.wharr), [640,480]);        
-
-    finopt.isxhrloaded  = o.getasbool(opt.isxhrloaded, ismobilejs.apple.phone);
+      
+    if (typeof window === 'object') {
+      finopt.wharr = o.getasarr(opt.wharr && cycvideo_aspect.nearestwindow_truewh(opt.wharr), [640,480]);              
+      finopt.isxhrloaded  = o.getasbool(opt.isxhrloaded, ismobilejs.apple.phone);
+    } else {
+      finopt.wharr = o.getasarr(opt.wharr, [640, 480]);
+      finopt.isxhrloaded  = false;
+    }
+    
     finopt.isstats      = o.getasbool(opt.isstats, false);    
     finopt.istesting    = o.getasbool(opt.istesting, true);
     finopt.iscaptions   = o.getasbool(opt.iscaptions, true);

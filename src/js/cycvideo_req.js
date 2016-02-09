@@ -1,5 +1,5 @@
 // Filename: cycvideo_req.js  
-// Timestamp: 2016.02.05-11:02:29 (last modified)
+// Timestamp: 2016.02.08-17:44:39 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>
 //
 // https://github.com/Reactive-Extensions/RxJS/blob/ \
@@ -12,6 +12,10 @@ import fromnodeprogresscallback from 'fromnodeprogresscallback';
 var cycvideo_req = (function (o) {
 
   o.getblob$ = function (opts) {
+    if (typeof document !== 'object') {
+      return rx.Observable.just('');
+    }
+    
     return fromnodeprogresscallback(rx, function (ctx, progressfn, fn) {
       var xhr = xdrgo.newRequest(),
           url = opts.url,
