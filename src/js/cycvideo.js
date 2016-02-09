@@ -1,12 +1,12 @@
 // Filename: cycvideo.js  
-// Timestamp: 2016.02.08-18:17:19 (last modified)
+// Timestamp: 2016.02.09-05:35:43 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>
 
-import Rx from 'rx-dom';
-import { h } from '@cycle/dom';
+import rx from 'rx-dom';
 import xdrgo from 'xdrgo';
 import {div, span, input, h2, makeDOMDriver} from '@cycle/dom';
 import cycvideo_bttngroup from './cycvideo_bttngroup';
+import cycvideo_bttngroupminmax from './cycvideo_bttngroupminmax';
 import cycvideo_labelindicator from './cycvideo_labelindicator';
 import cycvideo_slideseek from './cycvideo_slideseek';
 import cycvideo_dropfillmode from './cycvideo_dropfillmode';
@@ -27,9 +27,10 @@ import cycvideo_opts from './cycvideo_opts';
 //
 function intent(DOM, opts) {
 
-  var opt$ = Rx.Observable.just(opts);    
+  var opt$ = rx.Observable.just(opts);    
   
   var bttngroup$ = cycvideo_bttngroup.streams(DOM, opts);
+  var minmaxgroup$ = cycvideo_bttngroupminmax.streams(DOM, opts);  
 
   var fillmode$ = DOM.select('#uidcycvideo_dropfillmode')
         .events('change').pluck('target', 'value');
@@ -37,28 +38,25 @@ function intent(DOM, opts) {
   var vrmode$ = DOM.select('#uidcycvideo_dropvrmode')
         .events('change').pluck('target', 'value');
 
-  //var blob$ = Rx.Observable.just('');
-  //if (typeof document === 'object') {
- var blob$ = cycvideo_req.getblob$({
-      url : opts.srcarr[0]
-    });
-    blob$.subscribe(
-      function (e) { console.log('blog$ progress ' + e.type === 'progress' ? (e.loaded/e.total) * 100 : e); },
-      function (e) { console.log('onError: %s', e); },
-      function ()  { console.log('onCompleted'); }
-    );
-  //}
+  var blob$ = cycvideo_req.getblob$({
+    url : opts.srcarr[0]
+  });
+  
+  blob$.subscribe(
+    function (e) { console.log('blog$ progress ' + e.type === 'progress' ? (e.loaded/e.total) * 100 : e); },
+    function (e) { console.log('onError: %s', e); },
+    function ()  { console.log('onCompleted'); }
+  );
 
   var progress$ = blob$.map((ev) => {
     return typeof ev === 'object' ? (ev.loaded/ev.total) * 100 : 100;
-  }).filter(ev => ev).map(ev => typeof ev === 'number' ? ev : 100);
+  });
 
   // 'progress', 'timeupdate', 'canplay', 'play', 'pause'
   // seek, includes progress and seek area
-  var timeupdate$ = Rx.Observable.merge(
+  var timeupdate$ = rx.Observable.merge(
     typeof document === 'object' ?
-      //Rx.DOM.fromEvent(document.getElementById('cycvideo_video'), 'timeupdate') :
-      Rx.DOM.fromEvent(cycvideo_dom.get_video_elem(opts), 'timeupdate') :
+      rx.DOM.fromEvent(cycvideo_dom.get_video_elem(opts), 'timeupdate') :
       DOM.select('#cycvideo_video').events('timeupdate')
   ).filter(ev => ev && ev.target);
 
@@ -77,13 +75,13 @@ function intent(DOM, opts) {
     return ev;
   });
 
-  var buffer$ = Rx.Observable.merge(timeupdate$, seek$)
+  var buffer$ = rx.Observable.merge(timeupdate$, seek$)
         .filter(cycvideo_dom.is_doc)
         .map(e => cycvideo_dom.get_video_elem(opts))
         .map(cycvideo_buffer.get_buffer_state);
 
 
-  var playstate$ = Rx.Observable.merge(
+  var playstate$ = rx.Observable.merge(
     seekfocus$,
     bttngroup$,
     blob$.map(e => e.length ? 'pause' : 'load'));
@@ -91,14 +89,14 @@ function intent(DOM, opts) {
   return {
     opt$        : opt$,
     fillmode$   : fillmode$,
-    timeupdate$ : timeupdate$,
     vrmode$     : vrmode$,    
     buffer$     : buffer$,
     playstate$  : playstate$,
     progress$   : progress$,
     blob$       : blob$,
     seek$       : seek$,
-    wharr$      : Rx.Observable.just([640, 480])
+    minmaxgroup$ : minmaxgroup$,
+    wharr$      : rx.Observable.just([640, 480])
   };
 }
 
@@ -108,13 +106,9 @@ function intent(DOM, opts) {
 //   Output: state$ Observable
 //
 function model(actions) {
-  //return Rx.Observable.merge(
-  return Rx.Observable.combineLatest(
-    //actions.changeWeight$.startWith(70),
-    //actions.changeHeight$.startWith(170),
+  return rx.Observable.combineLatest(
     actions.opt$,
     actions.playstate$.startWith('load'),
-    actions.timeupdate$.startWith({}),
     actions.progress$.startWith(0),    
     actions.blob$.startWith(''),
     actions.buffer$.startWith({
@@ -124,13 +118,13 @@ function model(actions) {
       timess_current  : 0
     }),
     actions.seek$.startWith(''),
-    
     actions.wharr$,
+    actions.minmaxgroup$.startWith('minimized'),    
     actions.fillmode$.startWith('fitted'),
     actions.vrmode$.startWith('flat'),
 
-    (opts, playstate, timeupdate, progress, blob, buffer, seek,  wharr, fillmode, vrmode) => {
-      return {opts, playstate, timeupdate, progress, blob, buffer, seek,  wharr, fillmode, vrmode};    
+    (opts, playstate, progress, blob, buffer, seek,  wharr, minmaxgroup, fillmode, vrmode) => {
+      return {opts, playstate, progress, blob, buffer, seek,  wharr, minmaxgroup, fillmode, vrmode};    
     }
   );
 }
@@ -144,18 +138,24 @@ function model(actions) {
 // load cat video
 // observe the statestream
 function view(state$) {
-  return state$.map(({opts, playstate, timeupdate, progress, blob, buffer, seek,  wharr, fillmode, vrmode}) => {
+  return state$.map(({opts, playstate, progress, blob, buffer, seek,  wharr, minmaxgroup, fillmode, vrmode}) => {
     return div('.cycvideo', [
       cycvideo_video.view(state$, opts, playstate, blob, wharr),
       
-      div('.cycvideo_ctrls', [    
-        cycvideo_bttngroup.view(state$, playstate),
-        cycvideo_dropfillmode.view(state$, fillmode),
-        cycvideo_dropvrmode.view(state$, vrmode),    
-        cycvideo_labelindicator.view(state$, buffer),
-        cycvideo_slideseek.view(state$, buffer, progress)
+      div('.cycvideo_ctrls', [
+        cycvideo_slideseek.view(state$, buffer, progress),
+        div('.cycvideo_ctrls_col', [
+          div('.cycvideo_ctrls_colleft', [                  
+            cycvideo_bttngroup.view(state$, playstate),
+            cycvideo_dropfillmode.view(state$, fillmode),
+            cycvideo_dropvrmode.view(state$, vrmode),    
+            cycvideo_labelindicator.view(state$, buffer)
+          ]),
+          div('.cycvideo_ctrls_colright', [
+            cycvideo_bttngroupminmax.view(state$, minmaxgroup)
+          ])
+        ])
       ])
-      //h2('State is ' + playstate)
     ]);
   });
 }

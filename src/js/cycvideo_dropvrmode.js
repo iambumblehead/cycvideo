@@ -1,5 +1,5 @@
 // Filename: cycvideo_dropvrmode.js  
-// Timestamp: 2016.02.05-16:16:34 (last modified)
+// Timestamp: 2016.02.09-01:56:13 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>  
 
 import {label, span, select, option} from '@cycle/dom';

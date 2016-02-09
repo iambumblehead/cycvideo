@@ -1,5 +1,5 @@
 // Filename: cycvideo_video.js  
-// Timestamp: 2016.02.08-17:12:23 (last modified)
+// Timestamp: 2016.02.09-03:36:00 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>  
 
 import {video} from '@cycle/dom';

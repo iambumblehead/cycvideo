@@ -1,5 +1,5 @@
 // Filename: cycvideo_slideseek.js  
-// Timestamp: 2016.02.08-16:49:23 (last modified)
+// Timestamp: 2016.02.09-00:53:30 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>
 
 import {label, span, progress, input, h} from '@cycle/dom';
@@ -11,6 +11,11 @@ function view(state$, buffer, loadprogress) {
         span('.cycvideo_slideseek_label_primary'), 
         h('progress.cycvideo_slideseek_progress#uidcycvideo_slideseek_progress', {
           value : loadprogress, // progress of video load
+          min   : 0,
+          max   : 100
+        }),
+        h('progress.cycvideo_slideseek_progress.position', {
+          value : buffer.seek_percent * 100, // progress of video load
           min   : 0,
           max   : 100
         }),

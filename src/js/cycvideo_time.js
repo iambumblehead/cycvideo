@@ -1,5 +1,5 @@
 // Filename: cycvideo_time.js  
-// Timestamp: 2016.02.08-13:21:22 (last modified)
+// Timestamp: 2016.02.09-02:56:17 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>  
 
 
@@ -12,7 +12,7 @@ o.numpad = function (num) {
 };
 
 o.get_best_format = function (ssnum) {
-  var format = 'ss';
+  var format = 'm:ss';
   
   if (ssnum >= 36000) {       // 10 hours
     format = 'hh:mm:ss';

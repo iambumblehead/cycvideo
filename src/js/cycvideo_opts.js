@@ -1,5 +1,5 @@
 // Filename: cycvideo_opts.js  
-// Timestamp: 2016.02.08-14:23:19 (last modified)
+// Timestamp: 2016.02.09-03:51:56 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>
 
 import cycvideo_aspect from './cycvideo_aspect';

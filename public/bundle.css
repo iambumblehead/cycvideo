@@ -1,23 +1,87 @@
 /* Filename: bundle.css  
- * Timestamp: 2016.02.08-15:46:47 (last modified)
+ * Timestamp: 2016.02.09-05:31:10 (last modified)
  * Author(s): bumblehead <chris@bumblehead.com>  
+ */
+
+/*
+ * sound icon
+ * http://codepen.io/syndicatefx/pen/wakju
+ *
+ * fullscreen and minimize icon
+ * http://codepen.io/gimp27/pen/JthcG
+ *
+ * back arrow?
+ * 
+ * cc icon?
+ *
+ * gear icon
+ * http://tipstak.blogspot.com/2014/02/css3-icons.html
  */
 
 .cycvideo {
     position:relative;
     display:inline-block;
     font-size:0;
+
+    font-family:HelveticaNeue-Light,"Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight:400;
 }
+
+
+
 .cycvideo_ctrls {
+    opacity:0;
+
+    transition-delay: 0.3s;
+    -webkit-transition-delay: 0.3s;
+    -moz-transition-delay: 0.3s;
+    
+    transition: opacity 0.3s;
+    -webkit-transition: opacity 0.3s;
+    -moz-transition: opacity 0.3s;    
+    
     position:absolute;
     bottom:0;right:0;left:0;
-    height: 50px;
-    background-color:rgba(255,0,0,0.3);
+    padding:4px 0 2px 0;
+
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+0,000000+100&0+0,0.65+19 */
+    background: -moz-linear-gradient(top,  rgba(0,0,0,0) 0%, rgba(0,0,0,0.65) 19%, rgba(0,0,0,0.65) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 19%,rgba(0,0,0,0.65) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 19%,rgba(0,0,0,0.65) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#a6000000',GradientType=0 ); /* IE6-9 */
 }
+
+.cycvideo:hover .cycvideo_ctrls {
+    opacity:1;    
+}
+
+.cycvideo_ctrls > * {
+    vertical-align:middle;
+}
+
+.cycvideo_ctrls_col {
+    display: -ms-flex;
+    display: -webkit-flex;
+    display: flex;
+}
+.cycvideo_ctrls_colleft,
+.cycvideo_ctrls_colright {
+    width:50%;
+    display:inline-block;
+}
+.cycvideo_ctrls_colright {
+    text-align:right;
+    padding-right:10px;
+}
+.cycvideo_ctrls_colleft {
+    padding-left:8px;
+}
+
+
 .cycvideo_bttngroup {
     display:inline-block;
-    width:40px;
-    height:50px;
+    width:34px;
+    vertical-align:middle;
 }
 .cycvideo_bttngroup .cycvideo_bttnplay,
 .cycvideo_bttngroup .cycvideo_bttnpause,
@@ -34,12 +98,14 @@
     color:#fff;
     font-size:14px;
     display:inline-block;
+    vertical-align:middle;
+    margin:0 4px;
 }
 .cycvideo_labelindicator_seektime,
 .cycvideo_labelindicator_fulltime {
     display:inline-block;
 }
-.cycvideo_labelindicator_seektime {
+.cycvideo_labelindicator_seektime::after {
     margin:0 4px;
     content : "/";
     display:inline-block;
@@ -49,82 +115,201 @@
 .cycvideo_dropfillmode,
 .cycvideo_dropvrmode {
     font-size:14px;
+    display:none;
 }
-
-
-/*
-.cycvideo_labelindicator_seektime,
-.cycvideo_labelindicator_fulltime {
-    position:absolute;
-    width:100%;
-    top:0;left:0;right:0;
-    margin:2px;
-    height:15px;
-    border:0;
-}
-*/
-
 .cycvideo_slideseek {
-    /*
-    position:absolute;
-    top:0;left:0;right:0;bottom:0;
-    top: calc(50% - 90px);
-    color:#fff;
-    background-color: rgba(0,0,0,0.5);*/
     position:relative;
-    width: calc(100% - 280px);
-    min-height:20px;
+    width:100%;
+    min-height:14px;
     display:inline-block;
 }
 
 
-.cycvideo_slideseek_progress,
-.cycvideo_slideseek_input {
+.cycvideo_slideseek_progress {
     position:absolute;
-    width:100%;
-    top:0;left:0;right:0;
-    margin:2px;
-    height:15px;
-    border:0;
+    width: calc(100% - 6px);
+    top:0;left:3px;right:3px;
+    margin:7px 0 0 0;
+    padding:0;
+    height:3px;
 }
+.cycvideo_slideseek:hover .cycvideo_slideseek_progress {
+    margin:6px 0 0 0;
+    height:4px;
+}
+
+input[type=range].cycvideo_slideseek_input {
+    position:absolute;
+    width: calc(100% - 6px);
+    top:0;left:3px;right:3px;
+    background-color:transparent;
+    border:0;
+    padding:0;
+    margin:6px 0 0 0;    
+    height:2px;
+}
+
+
+/* http://brennaobrien.com/blog/2014/05/style-input-type-range-in-every-browser.html
+ */
+input[type=range] {
+    /*removes default webkit styles*/
+    -webkit-appearance: none;
+    
+    /*fix for FF unable to apply focus style bug */
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid transparent;    
+    
+    /*required for proper track sizing in FF*/
+    /*width: 300px;*/
+}
+input[type=range]::-webkit-slider-runnable-track {
+    width: 300px;
+    height: 6px;
+    /*background: #ddd;*/
+    background:transparent;
+    border: none;
+    border-radius: 3px;
+}
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    border: none;
+    /*height:2px;
+    width:2px;
+   */
+    opacity:0;
+
+    
+    height: 10px;
+    width: 10px;
+
+    border-radius: 50%;
+    /*background: goldenrod;*/
+    background: #b0d168;
+    margin-top: -4px;
+}
+.cycvideo_slideseek:hover input[type=range]::-webkit-slider-thumb {
+    opacity:1;
+}
+
+input[type=range]:focus {
+    outline: none;
+}
+input[type=range]:focus::-webkit-slider-runnable-track {
+    /*background: #ccc;*/
+    background:transparent;
+}
+
+input[type=range]::-moz-range-track {
+    width: 300px;
+    height: 5px;
+    /*background: #ddd;*/
+    background: transparent;
+    border: none;
+    border-radius: 3px;
+}
+input[type=range]::-moz-range-thumb {
+    border: none;
+    /*
+    height: 16px;
+    width: 16px;
+   */
+    height: 10px;
+    width: 10px;
+    
+    border-radius: 50%;
+    /*background: goldenrod;*/
+    background: #b0d168;
+    opacity:0;
+}
+.cycvideo_slideseek:hover input[type=range]::-moz-range-thumb {
+    opacity:1;
+}
+
+
+/*hide the outline behind the border*/
+input[type=range]:-moz-focusring{
+    outline: 1px solid transparent;
+    outline-offset: -1px;
+}
+
+input[type=range]::-ms-track {
+    width: 300px;
+    height: 5px;
+    
+    /*remove bg colour from the track, we'll use ms-fill-lower and ms-fill-upper instead */
+    background: transparent;
+    
+    /*leave room for the larger thumb to overflow with a transparent border */
+    border-color: transparent;
+    border-width: 6px 0;
+
+    /*remove default tick marks*/
+    color: transparent;
+}
+input[type=range]::-ms-fill-lower {
+    background: #777;
+    border-radius: 10px;
+}
+input[type=range]::-ms-fill-upper {
+    /*background: #ddd;*/
+    background:transparent;
+    border-radius: 10px;
+}
+input[type=range]::-ms-thumb {
+    border: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    /*background: goldenrod;*/
+    background: #b0d168;        
+}
+input[type=range]:focus::-ms-fill-lower {
+    background: #888;
+}
+input[type=range]:focus::-ms-fill-upper {
+    background: #ccc;
+}
+
 
 /*  
  * progress bar styles,
  * http://www.hongkiat.com/blog/html5-progress-bar/ 
  */
 .cycvideo_slideseek_progress {
-/*.fsgo-video-layer-control-slider-label-buffer {*/
     background-color: #f3f3f3;
     border: 0;
-    width: 100%;
     border-radius: 9px;
     padding:0;
 }
+.cycvideo_slideseek_progress {
+    background-color:transparent;
+}
+
 .cycvideo_slideseek_progress::-webkit-progress-bar {
     background-color: #f3f3f3;
     border-radius: 9px;
 }
+.cycvideo_slideseek_progress.position::-webkit-progress-bar {
+    background-color: transparent;
+}
+
 .cycvideo_slideseek_progress::-webkit-progress-value {
-    background: #cdeb8e;
-    background: -moz-linear-gradient(top,  #cdeb8e 0%, #a5c956 100%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#cdeb8e), color-stop(100%,#a5c956));
-    background: -webkit-linear-gradient(top,  #cdeb8e 0%,#a5c956 100%);
-    background: -o-linear-gradient(top,  #cdeb8e 0%,#a5c956 100%);
-    background: -ms-linear-gradient(top,  #cdeb8e 0%,#a5c956 100%);
-    background: linear-gradient(to bottom,  #cdeb8e 0%,#a5c956 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cdeb8e', endColorstr='#a5c956',GradientType=0 );
+    background: #e8f8f9;/*#51d3d9;*/
     border-radius: 9px;
 }
-.cycvideo_slideseek_progress::-moz-progress-bar {
+
+/*#e8f8f9;*/
+.cycvideo_slideseek_progress.position::-webkit-progress-value {
     background: #cdeb8e;
-    background: -moz-linear-gradient(top,  #cdeb8e 0%, #a5c956 100%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#cdeb8e), color-stop(100%,#a5c956));
-    background: -webkit-linear-gradient(top,  #cdeb8e 0%,#a5c956 100%);
-    background: -o-linear-gradient(top,  #cdeb8e 0%,#a5c956 100%);
-    background: -ms-linear-gradient(top,  #cdeb8e 0%,#a5c956 100%);
-    background: linear-gradient(to bottom,  #cdeb8e 0%,#a5c956 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cdeb8e', endColorstr='#a5c956',GradientType=0 );
+}
+
+.cycvideo_slideseek_progress::-moz-progress-bar {
+    background: #e8f8f9;/*#51d3d9;*/
     border-radius: 9px;
+}
+.cycvideo_slideseek_progress.position::-moz-progress-bar {
+    background: #cdeb8e;
 }
 
 
@@ -152,7 +337,8 @@
     vertical-align:middle;
 }
 .cycvideo_bttnplay {
-    height: 60px;
+    /*height: 60px;*/
+    height:36px;
     width:36px;
 }
 
@@ -170,9 +356,9 @@
 
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent;
-    /*border-left: 12px solid #fff;*/
-    border-left: 12px solid red;
-    margin: 20px auto 10px auto;    
+    border-left: 12px solid #e8f8f9;    
+    /*margin: 20px auto 10px auto;*/
+    margin: 8px auto;
     position: relative;
     z-index: 1;
     transition: all 0.3s;
@@ -189,7 +375,9 @@
     right:-7px;
     border-radius: 50%;
     /*border: 1px solid #fff;*/
-    border: 1px solid red;
+    /*border: 1px solid red;*/
+    border: 3px solid #e8f8f9;
+    
     z-index: 2;
     transition: all 0.3s;
     -webkit-transition: all 0.3s;
@@ -234,7 +422,8 @@
     vertical-align:middle;
 }
 .cycvideo_bttnpause {
-    height: 60px;
+    /*height: 60px;*/
+    height: 36px;
     width:36px;
 }
 .cycvideo_bttnpause {
@@ -251,8 +440,10 @@
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent;
     /*border-left: 12px solid #fff;*/
-    border-left: 12px solid red;    
-    margin: 20px auto 10px auto;    
+    /*border-left: 12px solid red;*/
+    border-left: 12px solid #e8f8f9;
+    /*margin: 20px auto 10px auto;    */
+    margin: 8px auto;
     position: relative;
     z-index: 1;
     transition: all 0.3s;
@@ -265,8 +456,7 @@
     position: absolute;
     top:-15px;left:-23px;bottom:-15px;right:-7px;
     border-radius: 50%;
-    /*border: 1px solid #fff;*/
-    border: 1px solid red;
+    border: 3px solid #e8f8f9;
     z-index: 2;
     transition: all 0.3s;
     -webkit-transition: all 0.3s;
@@ -291,15 +481,13 @@
 .cycvideo_bttnpause-primary:after {
   content: '';
   opacity: 1;
-  width: 10px;
+  width: 9px;
   height: 16px;
-  /*background: #fff;  */
-  background: red;
+  background: #e8f8f9;
   position: absolute;
-  right:1px;
+  right:3px;
   top:-8px;
-  /*border-left: 4px solid #fff;*/
-  border-left: 4px solid red;
+  border-left: 4px sold #e8f8f9;
   box-shadow: inset 6px 0 0 0 transparent;  
 }
 
@@ -333,19 +521,15 @@
 /*.fsgo-video-layer.st-isplay-loading .cycvideo_bttnload-primary {*/
 .cycvideo_bttnload-primary {
     display:inline-block;
-    /*width:16px;
-    height:16px;
-   */
+    width:24px;
+    height:24px;
 
-    width:28px;
-    height:28px;
-
-    margin:16px 0;
+    /*margin:16px 0;*/
+    margin:2px 0 0 3px;
     
     /*border: 4px rgba(0, 0, 0, 0.25) solid;*/
-    border: 1px rgba(255, 0, 0, 1) solid;    
-    /*border-top: 4px #fff solid;*/
-    border-top: 4px red solid;
+    border: 3px solid #e8f8f9;
+    border-top: 4px solid #e8f8f9;
     border-radius: 50%;
     -webkit-animation: spCircRot .6s infinite linear;
     animation: spCircRot .6s infinite linear;
@@ -356,7 +540,7 @@
     vertical-align:middle;
 }
 .cycvideo_bttnload {
-    height: 60px;
+    height: 36px;
     width:36px;
 }
 
@@ -364,5 +548,198 @@
 /* VIDEO
  */
 .cycvideo_video {
-    background-color:red;
+    background-color: #e8f8f9;    
 }
+
+
+.cycvideo_bttnmaximize {
+    width:26px;
+    height:20px;
+    position:relative;
+    display:inline-block;
+    vertical-align:middle;
+}
+.cycvideo_bttnmaximize_tl,
+.cycvideo_bttnmaximize_tr,
+.cycvideo_bttnmaximize_br,
+.cycvideo_bttnmaximize_bl {
+    width:4px;
+    height:4px;
+    border-color:#e8f8f9;
+    border-style:solid;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+.cycvideo_bttnmaximize_tl,
+.cycvideo_bttnmaximize_tr,
+.cycvideo_bttnmaximize_br,
+.cycvideo_bttnmaximize_bl {
+    position:absolute;
+}
+.cycvideo_bttnmaximize_tr {
+  top:1px;
+  right:1px;
+  border-width:3px 3px 0px 0px;
+}
+.cycvideo_bttnmaximize_tl {
+  top:1px;
+  left:1px;
+  border-width:3px 0px 0px 3px;
+}
+.cycvideo_bttnmaximize_br {
+  bottom:1px;
+  right:1px;
+  border-width:0px 3px 3px 0px;
+}
+.cycvideo_bttnmaximize_bl {
+  bottom:1px;
+  left:1px;
+  border-width:0px 0px 3px 3px;
+}
+.cycvideo_bttnmaximize:hover .cycvideo_bttnmaximize_tr {
+    top:0;right:0;        
+}
+.cycvideo_bttnmaximize:hover .cycvideo_bttnmaximize_tl {
+    top:0;left:0;    
+}
+.cycvideo_bttnmaximize:hover .cycvideo_bttnmaximize_br {
+    bottom:0;right:0;
+}
+.cycvideo_bttnmaximize:hover .cycvideo_bttnmaximize_bl {
+    bottom:0;left:0;
+}
+
+.cycvideo_bttngroupminmax:before {
+    content: " ";
+    display:inline-block;
+    width:2px;
+    height:36px;
+    vertical-align:middle;
+}
+.cycvideo_bttngroupminmax {
+    display:inline-block;
+}
+.cycvideo_bttngroupminmax .cycvideo_bttnminimize,
+.cycvideo_bttngroupminmax .cycvideo_bttnmaximize {
+    display:none;
+}
+.cycvideo_bttngroupminmax-maximized .cycvideo_bttnminimize,
+.cycvideo_bttngroupminmax-minimized .cycvideo_bttnmaximize {
+    display:inline-block;
+}
+.cycvideo_bttnminimize {
+    /*border: 2px solid #fff;*/
+    /*width:32px;*/
+    /*height:34px;*/
+    width: 26px;
+    height:20px;
+    position:relative;
+    display:inline-block;
+    vertical-align:middle;
+}
+.cycvideo_bttnminimize_tl,
+.cycvideo_bttnminimize_tr,
+.cycvideo_bttnminimize_br,
+.cycvideo_bttnminimize_bl {
+    width:4px;
+    height:4px;
+    /*border-color:white;*/
+    border-color:#e8f8f9;
+    border-style:solid;
+
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+
+    transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);    
+}
+.cycvideo_bttnminimize_tl,
+.cycvideo_bttnminimize_tr,
+.cycvideo_bttnminimize_br,
+.cycvideo_bttnminimize_bl {
+    position:absolute;
+}
+.cycvideo_bttnminimize_tr {
+  top:0;right:0;
+  border-width:3px 3px 0px 0px;
+}
+.cycvideo_bttnminimize_tl {
+  top:0;left:0;
+  border-width:3px 0px 0px 3px;
+}
+.cycvideo_bttnminimize_br {
+  bottom:0;right:0;
+  border-width:0px 3px 3px 0px;
+}
+.cycvideo_bttnminimize_bl {
+  bottom:0;left:0;
+  border-width:0px 0px 3px 3px;
+}
+
+.cycvideo_bttnminimize:hover .cycvideo_bttnminimize_tr {
+    top:1px;right:1px;
+}
+.cycvideo_bttnminimize:hover .cycvideo_bttnminimize_tl {
+    top:1px;left:1px;    
+}
+.cycvideo_bttnminimize:hover .cycvideo_bttnminimize_br {
+    bottom:1px;right:1px;
+}
+.cycvideo_bttnminimize:hover .cycvideo_bttnminimize_bl {
+    bottom:1px;left:1px;
+}
+
+
+
+
+
+/*
+div.icon {
+  height: 32px;
+  width: 32px;
+  position: relative;
+  margin: 15px;
+  overflow: hidden;
+  display: inline-block;
+}
+*/
+/* 
+ * Gear 
+ */
+/*
+div.icon div.gear:before {
+  content: '';
+  width: 18px;
+  height: 18px;
+  background: transparent;
+  border-radius: 50px;
+  -webkit-border-radius: 50px;
+  -moz-border-radius: 50px;
+  border: 5px dotted #333;
+  position: absolute;
+  left: -10px;
+  top: -10px;
+  z-index: -1
+}
+div.icon div.gear {
+  width: 8px;
+  height: 8px;
+  background: transparent;
+  border-radius: 50px;
+  -moz-border-radius: 50px;
+  -webkit-border-radius: 50px;
+  border: 6px solid #333;
+  position: absolute;
+  left: 4px;
+  top: 4px;
+}
+*/
