@@ -1,5 +1,5 @@
 // Filename: cycvideo.js  
-// Timestamp: 2016.02.09-17:39:43 (last modified)
+// Timestamp: 2016.02.09-23:48:07 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>
 
 import rx from 'rx-dom';
@@ -193,8 +193,8 @@ export default DOM => view(model(intent(DOM, cycvideo_opts({
     640, 320 // for testdrive 2:1 format
   ],
   srcarr : [
-    //'http://d8d913s460fub.cloudfront.net/videoserver/cat-test-video-320x240.mp4'
-    './testdrive.mp4' + '?' + Date.now
+    'http://d8d913s460fub.cloudfront.net/videoserver/cat-test-video-320x240.mp4'
+    //'./testdrive.mp4' + '?' + Date.now
   ],
   istesting   : true,
   isstats     : true,

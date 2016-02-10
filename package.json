@@ -6,9 +6,9 @@
   "repository": "https://github.com/iambumblehead/cycvideo",
   "scripts": {
     "test": ":",
-    "start": "NODE_ENV=development babel-node .",
-    "build": "NODE_ENV=production webpack -p --config ./pro.babel.js",
-    "dev": "NODE_ENV=development babel-node ."
+    "start": "NODE_ENV=development babel-node ./demo/express.js",
+    "build": "NODE_ENV=production webpack -p --config ./demo/pro.babel.js",
+    "dev": "NODE_ENV=development babel-node ./demo/express.js"
   },
   "keywords": [
     "cycle-video"

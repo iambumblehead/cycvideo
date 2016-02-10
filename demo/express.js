@@ -1,5 +1,5 @@
 // Filename: index.js  
-// Timestamp: 2016.02.09-11:48:49 (last modified)
+// Timestamp: 2016.02.09-23:45:29 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>
 
 import fs from 'fs';
@@ -13,7 +13,7 @@ const log = console.log,
       port       = process.env.PORT || 3000,
       app    = express(),
       router = express.Router(),
-      mvisrc = require.resolve('./src/js/cycvideo'),
+      mvisrc = require.resolve('../src/js/cycvideo'),
       DOM    = makeHTMLDriver(),
       main   = ({ DOM }) => ({ DOM: mvi(DOM) });
 
