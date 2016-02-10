@@ -1,5 +1,5 @@
 // Filename: cycvideo_video.js  
-// Timestamp: 2016.02.09-10:41:56 (last modified)
+// Timestamp: 2016.02.09-11:55:05 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>  
 
 import {video} from '@cycle/dom';
@@ -30,8 +30,8 @@ function view(state$, opts, playstate, blob, wharr) {
         playsinline : 'playsinline',        
         src         : typeof blob === 'string' ? blob : '',
         //'http://d8d913s460fub.cloudfront.net/videoserver/cat-test-video-320x240.mp4',
-        width       : wharr[0],
-        height      : wharr[1],
+        width       : opts.wharr[0],
+        height      : opts.wharr[1],
         autoplay    : state$.autoplay,
         poster      : state$.poster || '',
         loop        : state$.loop

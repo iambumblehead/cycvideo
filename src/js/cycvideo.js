@@ -1,11 +1,15 @@
 // Filename: cycvideo.js  
-// Timestamp: 2016.02.09-10:41:59 (last modified)
+// Timestamp: 2016.02.09-17:39:43 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>
 
 import rx from 'rx-dom';
 import xdrgo from 'xdrgo';
 import {div, span, input, h2, makeDOMDriver} from '@cycle/dom';
 import cycvideo_bttngroup from './cycvideo_bttngroup';
+import cycvideo_bttngear from './cycvideo_bttngear';
+import cycvideo_bttnspeaker from './cycvideo_bttnspeaker';
+import cycvideo_bttntheater from './cycvideo_bttntheater';
+import cycvideo_slategroup from './cycvideo_slategroup';
 import cycvideo_bttngroupminmax from './cycvideo_bttngroupminmax';
 import cycvideo_labelindicator from './cycvideo_labelindicator';
 import cycvideo_slideseek from './cycvideo_slideseek';
@@ -41,16 +45,24 @@ function intent(DOM, opts) {
   var blob$ = cycvideo_req.getblob$({
     url : opts.srcarr[0]
   });
-  
+
+  /*
   blob$.subscribe(
     function (e) { console.log('blog$ progress ' + e.type === 'progress' ? (e.loaded/e.total) * 100 : e); },
     function (e) { console.log('onError: %s', e); },
     function ()  { console.log('onCompleted'); }
   );
-
+   */
   var progress$ = blob$.map((ev) => {
-    return typeof ev === 'object' ? (ev.loaded/ev.total) * 100 : 100;
-  });
+    return typeof ev === 'object' ? Math.floor((ev.loaded/ev.total) * 100) : 100;
+  }).startWith(0).debounce(600).map(v => typeof document === 'object' ? v : 0);
+
+  progress$.subscribe(
+    function (e) { console.log('blog$ progress ' + e.type === 'progress' ? (e.loaded/e.total) * 100 : e); },
+    function (e) { console.log('onError: %s', e); },
+    function ()  { console.log('onCompleted'); }
+  );
+  
 
   // 'progress', 'timeupdate', 'canplay', 'play', 'pause'
   // seek, includes progress and seek area
@@ -82,9 +94,14 @@ function intent(DOM, opts) {
 
 
   var playstate$ = rx.Observable.merge(
+    cycvideo_slategroup.streams(DOM, opts),
     seekfocus$,
     bttngroup$,
     blob$.map(e => e.length ? 'pause' : 'load'));
+
+  // should observe an event upon which video element src attribute is updated
+  // then wharr should be modified to read video element
+  var wharr$ = rx.Observable.just(opts.wharr);
 
   return {
     opt$        : opt$,
@@ -96,7 +113,8 @@ function intent(DOM, opts) {
     blob$       : blob$,
     seek$       : seek$,
     minmaxgroup$ : minmaxgroup$,
-    wharr$      : rx.Observable.just([640, 480])
+    wharr$ : wharr$ 
+    //wharr$      : rx.Observable.just([640, 480])
   };
 }
 
@@ -109,7 +127,7 @@ function model(actions) {
   return rx.Observable.combineLatest(
     actions.opt$,
     actions.playstate$.startWith('load'),
-    actions.progress$.startWith(0),    
+    actions.progress$.startWith(0),
     actions.blob$.startWith(''),
     actions.buffer$.startWith({
       load_percent : 0.0,
@@ -142,7 +160,8 @@ function view(state$) {
     
     return div('.cycvideo', [
       cycvideo_video.view(state$, opts, playstate, blob, wharr),
-      
+      cycvideo_slategroup.view(state$, opts, playstate, progress),
+        
       div('.cycvideo_ctrls', [
         cycvideo_slideseek.view(state$, buffer, progress),
         div('.cycvideo_ctrls_col', [
@@ -153,6 +172,9 @@ function view(state$) {
             cycvideo_labelindicator.view(state$, buffer)
           ]),
           div('.cycvideo_ctrls_colright', [
+            cycvideo_bttnspeaker.view(state$, minmaxgroup),
+            cycvideo_bttngear.view(state$, minmaxgroup),            
+            cycvideo_bttntheater.view(state$, minmaxgroup),
             cycvideo_bttngroupminmax.view(state$, minmaxgroup)
           ])
         ])
@@ -171,7 +193,8 @@ export default DOM => view(model(intent(DOM, cycvideo_opts({
     640, 320 // for testdrive 2:1 format
   ],
   srcarr : [
-    'http://d8d913s460fub.cloudfront.net/videoserver/cat-test-video-320x240.mp4'
+    //'http://d8d913s460fub.cloudfront.net/videoserver/cat-test-video-320x240.mp4'
+    './testdrive.mp4' + '?' + Date.now
   ],
   istesting   : true,
   isstats     : true,
