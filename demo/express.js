@@ -1,5 +1,5 @@
 // Filename: index.js  
-// Timestamp: 2016.02.09-23:45:29 (last modified)
+// Timestamp: 2016.02.10-15:40:05 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>
 
 import fs from 'fs';
@@ -17,7 +17,7 @@ const log = console.log,
       DOM    = makeHTMLDriver(),
       main   = ({ DOM }) => ({ DOM: mvi(DOM) });
 
-var mvi = require(mvisrc).default;
+var mvi = require(mvisrc);
 
 if (production) {
   log('[pro]');

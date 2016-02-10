@@ -1,27 +1,31 @@
 // Filename: cycvideo_bttnpause.js  
-// Timestamp: 2016.02.08-17:27:32 (last modified)
+// Timestamp: 2016.02.10-13:59:45 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>
 //
 // not really a button.
 
-import {label, span} from '@cycle/dom';
-import Rx from 'rx-dom';
+var cycledom = require('@cycle/dom');
+var rx = require('rx-dom');
 
-function view(state$) {
-  return state$.map(
-    vals =>
-      label('.cycvideo_bttnload', [
-        span('.cycvideo_bttnload-primary')
-      ]));
-}
+var cycvideo_bttnload = module.exports = (function (o) {
 
-function streams(DOM, opts) {
-  return {
-    click : DOM.select('.cycvideo_bttnload').events('click')
+  o.view = function (state$) {
+    var label = cycledom.label,
+        span = cycledom.span;
+    
+    return state$.map(
+      vals =>
+        label('.cycvideo_bttnload', [
+          span('.cycvideo_bttnload-primary')
+        ]));
   };
-}
 
-export default {
-  view : view,
-  streams : streams
-};
+  o.streams = function (DOM, opts) {
+    return {
+      click : DOM.select('.cycvideo_bttnload').events('click')
+    };
+  };
+
+  return o;
+
+}({}));

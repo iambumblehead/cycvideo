@@ -1,28 +1,30 @@
 // Filename: cycvideo_bttntheater.js  
-// Timestamp: 2016.02.09-16:10:52 (last modified)
+// Timestamp: 2016.02.10-14:12:01 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>  
 
-import {div} from '@cycle/dom';
+var cycledom = require('@cycle/dom');
 
-function view(state$) {
-  return state$.map(
-    vals =>
-      div('.cycvideo_bttntheater', [
-        div('.cycvideo_bttntheater_tl'),
-        div('.cycvideo_bttntheater_tr'),
-        div('.cycvideo_bttntheater_br'),
-        div('.cycvideo_bttntheater_bl')
-      ]));
-}
+var cycvideo_bttntheater = module.exports = (function (o) {
 
-function streams(DOM, opts) {
-  return {
-    click : DOM.select('.cycvideo_bttntheater').events('click')
+  o.view = function (state$) {
+    var div = cycledom.div;
+    
+    return state$.map(
+      vals =>
+        div('.cycvideo_bttntheater', [
+          div('.cycvideo_bttntheater_tl'),
+          div('.cycvideo_bttntheater_tr'),
+          div('.cycvideo_bttntheater_br'),
+          div('.cycvideo_bttntheater_bl')
+        ]));
   };
-}
 
-export default {
-  view : view,
-  streams : streams  
-};
+  o.streams = function (DOM, opts) {
+    return {
+      click : DOM.select('.cycvideo_bttntheater').events('click')
+    };
+  };
+  
+  return o;
 
+}({}));

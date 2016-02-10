@@ -1,48 +1,50 @@
 // Filename: cycvideo_slateload.js  
-// Timestamp: 2016.02.09-14:58:22 (last modified)
+// Timestamp: 2016.02.10-14:59:32 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>  
 
-import Rx from 'rx-dom';
-import {div} from '@cycle/dom';
+var Rx = require('rx-dom');
+var cycledom = require('@cycle/dom');
 
+var cycvideo_slateload = module.exports = (function (o) {
 
-function view(state$, progress) {
-  return state$.map(
-    vals =>
-      div('.cycvideo_slateload', [
+  o.view = function (state$, progress) {
+    var div = cycledom.div;
+    
+    return state$.map(
+      vals =>
+        div('.cycvideo_slateload', [
 
-        // use whole number
-        // Math.floor(per * 100)
-        div('.pgloadcircle', [
-          div('.radial-progress#ProgressElem', {attributes: { "data-progress" : progress }}, [
-            div('.circle', [
-              div('.mask.full', [
-                div('.fill')
+          // use whole number
+          // Math.floor(per * 100)
+          div('.pgloadcircle', [
+            div('.radial-progress#ProgressElem', {attributes: { "data-progress" : progress }}, [
+              div('.circle', [
+                div('.mask.full', [
+                  div('.fill')
+                ]),
+                div('.mask.half', [
+                  div('.fill')
+                ]),
+                div('.shadow')
               ]),
-              div('.mask.half', [
-                div('.fill')
-              ]),
-              div('.shadow')
-            ]),
-            div('.inset', [
-              div('.percentage', [
-                div('.label', progress + '%')
+              div('.inset', [
+                div('.percentage', [
+                  div('.label', progress + '%')
+                ])
               ])
             ])
           ])
-        ])
-        
+          
 
-      ]));
-}
+        ]));
+  }
 
-function streams(DOM, opts) {
-  return {
-    click : DOM.select('.cycvideo_slateload').events('click')
-  };
-}
+  o.streams = function (DOM, opts) {
+    return {
+      click : DOM.select('.cycvideo_slateload').events('click')
+    };
+  }
 
-export default {
-  view : view,
-  streams : streams
-};
+  return o;
+
+}({}));

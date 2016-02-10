@@ -1,32 +1,34 @@
 // Filename: cycvideo_slateplay.js  
-// Timestamp: 2016.02.09-11:08:44 (last modified)
+// Timestamp: 2016.02.10-15:15:16 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>  
 
-import Rx from 'rx-dom';
-import {div} from '@cycle/dom';
 
+var Rx = require('rx-dom');
+var cycledom = require('@cycle/dom');
 
-function view(state$) {
-  return state$.map(
-    vals =>
-      div('.cycvideo_slateplay', [
-        // use whole number
-        // Math.floor(per * 100)
-        div('.pgplaycircle', [
-          div('.video-layer-load-playiconbg'),
-          div('.video-layer-load-playicon')
-        ])
-      ]));
-}
+var cycvideo_slateplay = module.exports = (function (o) {
 
-function streams(DOM, opts) {
-  return {
-    click : DOM.select('.cycvideo_slateplay').events('click')
+  o.view = function (state$) {
+    var div = cycledom.div;
+    
+    return state$.map(
+      vals =>
+        div('.cycvideo_slateplay', [
+          // use whole number
+          // Math.floor(per * 100)
+          div('.pgplaycircle', [
+            div('.video-layer-load-playiconbg'),
+            div('.video-layer-load-playicon')
+          ])
+        ]));
   };
-}
 
-export default {
-  view : view,
-  streams : streams
-};
+  o.streams = function (DOM, opts) {
+    return {
+      click : DOM.select('.cycvideo_slateplay').events('click')
+    };
+  };
 
+  return o;
+
+}({}));

@@ -1,31 +1,34 @@
 // Filename: cycvideo_bttngroup.js  
-// Timestamp: 2016.02.09-03:59:38 (last modified)
+// Timestamp: 2016.02.10-15:11:31 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>
 
-import Rx from 'rx-dom';
-import cycvideo_bttnmaximize from './cycvideo_bttnmaximize';
-import cycvideo_bttnminimize from './cycvideo_bttnminimize';
-import {div} from '@cycle/dom';
+var Rx = require('rx-dom');
+var cycvideo_bttnmaximize = require('./cycvideo_bttnmaximize');
+var cycvideo_bttnminimize = require('./cycvideo_bttnminimize');
+var cycledom = require('@cycle/dom');
 
-function view(state$, minmaxstate) {
-  return state$.map(
-    (vals) => {
-      return div('.cycvideo_bttngroupminmax.cycvideo_bttngroupminmax-'+minmaxstate+'#uidcycvideo_bttngroup', [
-        cycvideo_bttnmaximize.view(state$),
-        cycvideo_bttnminimize.view(state$)
-      ]);
-    }
-  );
-}
+var cycvideo_bttngroupminmax = module.exports = (function (o) {
 
-function streams(DOM, opts) {
-  return Rx.Observable.merge(
-    cycvideo_bttnmaximize.streams(DOM, opts).click.map(ev => 'maximized'),
-    cycvideo_bttnminimize.streams(DOM, opts).click.map(ev => 'minimized')    
-  );
-}
+  o.view = function (state$, minmaxstate) {
+    var div = cycledom.div;
+    
+    return state$.map(
+      (vals) => {
+        return div('.cycvideo_bttngroupminmax.cycvideo_bttngroupminmax-'+minmaxstate+'#uidcycvideo_bttngroup', [
+          cycvideo_bttnmaximize.view(state$),
+          cycvideo_bttnminimize.view(state$)
+        ]);
+      }
+    );
+  };
 
-export default {
-  view : view,
-  streams : streams
-};
+  o.streams = function (DOM, opts) {
+    return Rx.Observable.merge(
+      cycvideo_bttnmaximize.streams(DOM, opts).click.map(ev => 'maximized'),
+      cycvideo_bttnminimize.streams(DOM, opts).click.map(ev => 'minimized')    
+    );
+  };
+
+  return o;
+  
+}({}));

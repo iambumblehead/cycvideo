@@ -1,5 +1,5 @@
 /* Filename: bundle.css  
- * Timestamp: 2016.02.09-18:03:56 (last modified)
+ * Timestamp: 2016.02.10-12:39:23 (last modified)
  * Author(s): bumblehead <chris@bumblehead.com>  
  */
 
@@ -2126,9 +2126,7 @@ width: 120px;
 .cycvideo_bttntheater_tr,
 .cycvideo_bttntheater_br,
 .cycvideo_bttntheater_bl {
-    /*width:4px;*/
     width:10px;
-    /*height:4px;*/
     height:6px;
     border-color:#e8f8f9;
     border-style:solid;

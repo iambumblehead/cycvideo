@@ -1,25 +1,26 @@
 // Filename: cycvideo.js  
-// Timestamp: 2016.02.09-23:48:07 (last modified)
+// Timestamp: 2016.02.10-15:33:38 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>
 
-import rx from 'rx-dom';
-import xdrgo from 'xdrgo';
-import {div, span, input, h2, makeDOMDriver} from '@cycle/dom';
-import cycvideo_bttngroup from './cycvideo_bttngroup';
-import cycvideo_bttngear from './cycvideo_bttngear';
-import cycvideo_bttnspeaker from './cycvideo_bttnspeaker';
-import cycvideo_bttntheater from './cycvideo_bttntheater';
-import cycvideo_slategroup from './cycvideo_slategroup';
-import cycvideo_bttngroupminmax from './cycvideo_bttngroupminmax';
-import cycvideo_labelindicator from './cycvideo_labelindicator';
-import cycvideo_slideseek from './cycvideo_slideseek';
-import cycvideo_dropfillmode from './cycvideo_dropfillmode';
-import cycvideo_dropvrmode from './cycvideo_dropvrmode';
-import cycvideo_buffer from './cycvideo_buffer';
-import cycvideo_video from './cycvideo_video';
-import cycvideo_req from './cycvideo_req';
-import cycvideo_dom from './cycvideo_dom';
-import cycvideo_opts from './cycvideo_opts';
+var rx = require('rx-dom');
+var xdrgo = require('xdrgo');
+var cycledom = require('@cycle/dom');
+//import {div, span, input, h2, makeDOMDriver} from '@cycle/dom';
+var cycvideo_bttngroup = require('./cycvideo_bttngroup');
+var cycvideo_bttngear = require('./cycvideo_bttngear');
+var cycvideo_bttnspeaker = require('./cycvideo_bttnspeaker');
+var cycvideo_bttntheater = require('./cycvideo_bttntheater');
+var cycvideo_slategroup = require('./cycvideo_slategroup');
+var cycvideo_bttngroupminmax = require('./cycvideo_bttngroupminmax');
+var cycvideo_labelindicator = require('./cycvideo_labelindicator');
+var cycvideo_slideseek = require('./cycvideo_slideseek');
+var cycvideo_dropfillmode = require('./cycvideo_dropfillmode');
+var cycvideo_dropvrmode = require('./cycvideo_dropvrmode');
+var cycvideo_buffer = require('./cycvideo_buffer');
+var cycvideo_video = require('./cycvideo_video');
+var cycvideo_req = require('./cycvideo_req');
+var cycvideo_dom = require('./cycvideo_dom');
+var cycvideo_opts = require('./cycvideo_opts');
 
 // http://staltz.com/unidirectional-user-interface-architectures.html
 // https://github.com/Reactive-Extensions/RxJS/blob/master/doc/gettingstarted/callbacks.md
@@ -29,6 +30,9 @@ import cycvideo_opts from './cycvideo_opts';
 //   Input: DOM Driver source
 //   Output: Action Observables
 //
+var cycvideo = module.exports = (function (o) {
+
+
 function intent(DOM, opts) {
 
   var opt$ = rx.Observable.just(opts);    
@@ -156,6 +160,8 @@ function model(actions) {
 // load cat video
 // observe the statestream
 function view(state$) {
+  var div = cycledom.div;
+  
   return state$.map(({opts, playstate, progress, blob, buffer, seek,  wharr, minmaxgroup, fillmode, vrmode}) => {
     
     return div('.cycvideo', [
@@ -183,7 +189,8 @@ function view(state$) {
   });
 }
 
-export default DOM => view(model(intent(DOM, cycvideo_opts({
+  //export default DOM => view(model(intent(DOM, cycvideo_opts({
+return DOM => view(model(intent(DOM, cycvideo_opts({
   uid : 1,
   wharr : [
     // http://stackoverflow.com/questions/4129102/html5-video-dimensions
@@ -205,6 +212,10 @@ export default DOM => view(model(intent(DOM, cycvideo_opts({
   //poster : feed.getProgramFittedThumbnail(program, videoelem),
   //fillmode : cyclvideo_opts.fillmode_fill,
   //vrmode   : cyclvideo_opts.vrmode_panorama
-  
+})))); 
 
-}))));
+//}))));
+
+  return o;  
+
+}({}));

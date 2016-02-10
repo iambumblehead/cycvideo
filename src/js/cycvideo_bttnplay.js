@@ -1,24 +1,28 @@
 // Filename: cycvideo_bttnplay.js  
-// Timestamp: 2016.02.08-17:28:43 (last modified)
+// Timestamp: 2016.02.10-15:16:01 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>  
 
-import {label, span} from '@cycle/dom';
+var cycledom = require('@cycle/dom');
 
-function view(state$) {
-  return state$.map(
-    vals =>
-      label('.cycvideo_bttnplay#uidcycvideo_bttnplay', [
-        span('.cycvideo_bttnplay-primary')
-      ]));
-}
+var cycvideo_bttnplay = module.exports = (function (o) {
 
-function streams(DOM, opts) {
-  return {
-    click : DOM.select('.cycvideo_bttnplay').events('click')
+  o.view = function (state$) {
+    var label = cycledom.label,
+        span = cycledom.span;
+    
+    return state$.map(
+      vals =>
+        label('.cycvideo_bttnplay#uidcycvideo_bttnplay', [
+          span('.cycvideo_bttnplay-primary')
+        ]));
   };
-}
 
-export default {
-  view : view,
-  streams : streams  
-};
+  o.streams = function (DOM, opts) {
+    return {
+      click : DOM.select('.cycvideo_bttnplay').events('click')
+    };
+  };
+  
+  return o;
+  
+}({}));

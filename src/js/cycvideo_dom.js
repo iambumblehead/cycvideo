@@ -1,8 +1,8 @@
 // Filename: cycvideo_dom.js  
-// Timestamp: 2016.02.08-17:08:07 (last modified)
+// Timestamp: 2016.02.10-14:21:01 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>  
 
-var o = {};
+var cycvideo_dom = module.exports = (function (o) {
 
 o.is_doc = function () {
   return typeof document === 'object';
@@ -116,7 +116,7 @@ o.get_video_layer_elem = function (player) {
     return video_layer
       && elemst.is(video_layer, 'isplay-false');
   };  
-*/  
+ */
+  return o;
 
-
-export default o;
+}({}));

@@ -1,15 +1,15 @@
 // Filename: cycvideo_req.js  
-// Timestamp: 2016.02.09-11:28:43 (last modified)
+// Timestamp: 2016.02.10-14:37:40 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>
 //
 // https://github.com/Reactive-Extensions/RxJS/blob/ \
 //   8f12f812d497acf639588e90f74d504a9fc801ec/src/core/linq/observable/fromnodecallback.js
 
-import xdrgo from 'xdrgo';
-import rx from 'rx';
-import fromnodeprogresscallback from 'fromnodeprogresscallback';
+var xdrgo = require('xdrgo');
+var rx = require('rx');
+var fromnodeprogresscallback = require('fromnodeprogresscallback');
 
-var cycvideo_req = (function (o) {
+var cycvideo_req = module.exports = (function (o) {
 
   o.getblob$ = function (opts) {
     if (typeof document !== 'object') {
@@ -40,5 +40,3 @@ var cycvideo_req = (function (o) {
   return o;
   
 }({}));
-
-export default cycvideo_req;

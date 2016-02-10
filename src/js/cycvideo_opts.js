@@ -1,9 +1,9 @@
 // Filename: cycvideo_opts.js  
-// Timestamp: 2016.02.09-03:51:56 (last modified)
+// Timestamp: 2016.02.10-14:36:39 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>
 
-import cycvideo_aspect from './cycvideo_aspect';
-import ismobilejs from 'ismobilejs';
+var cycvideo_aspect = require('./cycvideo_aspect');
+var ismobilejs = require('ismobilejs');
 
 var cycvideo_opts = module.exports = (function (o) {
 

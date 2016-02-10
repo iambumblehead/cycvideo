@@ -1,25 +1,29 @@
 // Filename: cycvideo_bttngear.js  
-// Timestamp: 2016.02.09-16:16:11 (last modified)
+// Timestamp: 2016.02.10-13:57:02 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>  
 
-import {label, span} from '@cycle/dom';
-import Rx from 'rx-dom';
+var cycledom = require('@cycle/dom'),
+    rx = require('rx-dom');    
 
-function view(state$) {
-  return state$.map(
-    vals =>
-      label('.cycvideo_bttngear', [
-        span('.cycvideo_bttngear-primary')
-      ]));
-}
-
-function streams(DOM, opts) {
-  return {
-    click : DOM.select('.cycvideo_bttngear').events('click')
+var cycvideo_bttngear = module.exports = (function (o) {
+  
+  o.view = function (state$) {
+    var label = cycledom.label,
+        span = cycledom.span;
+    
+    return state$.map(
+      vals =>
+        label('.cycvideo_bttngear', [
+          span('.cycvideo_bttngear-primary')
+        ]));
   };
-}
 
-export default {
-  view : view,
-  streams : streams
-};
+  o.streams = function (DOM, opts) {
+    return {
+      click : DOM.select('.cycvideo_bttngear').events('click')
+    };
+  };
+
+  return o;
+
+}({}));
