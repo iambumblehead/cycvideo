@@ -1,11 +1,10 @@
 // Filename: cycvideo.js  
-// Timestamp: 2016.02.10-15:33:38 (last modified)
+// Timestamp: 2016.02.11-02:13:06 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>
 
 var rx = require('rx-dom');
 var xdrgo = require('xdrgo');
 var cycledom = require('@cycle/dom');
-//import {div, span, input, h2, makeDOMDriver} from '@cycle/dom';
 var cycvideo_bttngroup = require('./cycvideo_bttngroup');
 var cycvideo_bttngear = require('./cycvideo_bttngear');
 var cycvideo_bttnspeaker = require('./cycvideo_bttnspeaker');
@@ -34,7 +33,8 @@ var cycvideo = module.exports = (function (o) {
 
 
 function intent(DOM, opts) {
-
+  console.log('intent');
+  
   var opt$ = rx.Observable.just(opts);    
   
   var bttngroup$ = cycvideo_bttngroup.streams(DOM, opts);
@@ -127,7 +127,8 @@ function intent(DOM, opts) {
 //   Input: Action Observables
 //   Output: state$ Observable
 //
-function model(actions) {
+  function model(actions) {
+    console.log('model');
   return rx.Observable.combineLatest(
     actions.opt$,
     actions.playstate$.startWith('load'),
@@ -159,11 +160,22 @@ function model(actions) {
 //
 // load cat video
 // observe the statestream
-function view(state$) {
+  function view(state$) {
+    console.log('view');
   var div = cycledom.div;
   
-  return state$.map(({opts, playstate, progress, blob, buffer, seek,  wharr, minmaxgroup, fillmode, vrmode}) => {
-    
+  return state$.map(function (o) {
+    var opts = o.opts,
+        playstate = o.playstate,
+        progress = o.progress,
+        blob = o.blob,
+        buffer = o.buffer,
+        seek = o.seek,
+        wharr = o.wharr,
+        minmaxgroup = o.minmaxgroup,
+        fillmode = o.fillmode,
+        vrmode = o.vrmode;
+        
     return div('.cycvideo', [
       cycvideo_video.view(state$, opts, playstate, blob, wharr),
       cycvideo_slategroup.view(state$, opts, playstate, progress),

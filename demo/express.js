@@ -1,5 +1,5 @@
 // Filename: index.js  
-// Timestamp: 2016.02.10-18:29:51 (last modified)
+// Timestamp: 2016.02.10-19:02:39 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>
 
 
@@ -14,6 +14,7 @@ var express = require('express'),
     methodOverride = require('method-override'),
     scroungejs = require('scroungejs'),
     http = require('http'),
+    port = 3000,
     app;
 
 var fs = require('fs');
@@ -45,7 +46,13 @@ const log = console.log,
 
 var mvi = require(mvisrc);
 
-  app.engine('html', function (fpath, data, fn) {
+  app.use(bodyParser.urlencoded({ extended: false }));
+  app.use(bodyParser.json());
+  app.use(cookieParser());
+
+
+  /*
+  app.engine('.html', function (fpath, data, fn) {
     console.log('engine path');
     
     cyclecore.run(main, { DOM }).sources.DOM.forEach(ssr => {
@@ -58,17 +65,45 @@ var mvi = require(mvisrc);
   app.use(methodOverride());
   app.use(compression());
 
-  app.use('/www', express.static(__dirname + '/../www/'));  
+  app.use('/www', express.static(__dirname + '/../www/'));
+  // how is index attached at gani?
+  
 
-  app.use('/', express.static(__dirname + '/'));
+  //app.use('/', express.static(__dirname + '/'));
   //app.use('/', serveIndex(__dirname + '/'));
 
   // express' template path, path to index.html
-  //app.set('views', __dirname + '/');
+  app.set('views', __dirname + '/');
   //app.set('view engine', 'html');
-  //app.set('view options', {
-  //  layout : false
-  //});
+  app.set('view options', {
+    layout : false
+  });
+   */
+
+  
+/*
+router.get('/', (req, res, next) => {
+  run(main, { DOM }).sources.DOM.forEach(ssr => {
+    fs.readFile('./src/html/index.html', 'utf-8', function (err, content) {
+      res.end(content.replace(/__ssr__/, ssr));
+    });    
+  }, next);
+});
+*/
+
+  //var router = express.Router();
+  app.get('/', function (req, res, fn) {
+    console.log('engine path');
+    
+    cyclecore.run(main, { DOM }).sources.DOM.forEach(ssr => {
+      fs.readFile('./demo/index.html', 'utf-8', function (err, content) {
+        res.end(content.replace(/__ssr__/, ssr));
+      });    
+    }, fn);
+  });
+
+  //app.use(router).use(__dirname + '/www', express.static('/../www'));
+  app.use('/www', express.static(__dirname + '/../www'));  
 
   app.use(errorhandler({
     dumpExceptions : true, 

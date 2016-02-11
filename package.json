@@ -27,7 +27,7 @@
     "morgan": "1.5.1",
     "serve-favicon": "2.2.0",
     
-    "scroungejs" : "^0.8.91",
+    "scroungejs" : "^0.8.94",
     "serve-index": "1.6.1"    
   },
   "dependencies": {
