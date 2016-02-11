@@ -1,0 +1,93 @@
+/* Filename: cycvideo_bttnpause.less  
+ * Timestamp: 2016.02.11-13:59:05 (last modified)
+ * Author(s): bumblehead <chris@bumblehead.com>  
+ */
+/* BTTNPAUSE
+ */
+
+.cycvideo_bttnpause {
+    z-index:1;
+    position:relative;
+    display:inline-block;
+}
+/*
+.fsgo-video-layer.st-isplay-pauseinitial .cycvideo_bttnpause {
+    display:none;
+}
+.fsgo-video-layer.st-isplay-loading .cycvideo_bttnpause {
+    display:none;
+}
+*/
+.cycvideo_bttnpause {
+    display:inline-block;
+    vertical-align:middle;
+}
+.cycvideo_bttnpause {
+    /*height: 60px;*/
+    height: 36px;
+    width:36px;
+}
+.cycvideo_bttnpause {
+    display:inline-block;
+}
+.cycvideo_bttnpause-button {
+    display:none;
+}
+.cycvideo_bttnpause-primary {
+    display: block;
+    width: 0;
+    height: 0;
+
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    /*border-left: 12px solid #fff;*/
+    /*border-left: 12px solid red;*/
+    border-left: 12px solid #e8f8f9;
+    /*margin: 20px auto 10px auto;    */
+    margin: 8px auto;
+    position: relative;
+    z-index: 1;
+    transition: all 0.3s;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    left:2px;
+}
+.cycvideo_bttnpause-primary::before {
+    content: '';
+    position: absolute;
+    top:-15px;left:-23px;bottom:-15px;right:-7px;
+    border-radius: 50%;
+    border: 3px solid #e8f8f9;
+    z-index: 2;
+    transition: all 0.3s;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+}
+.cycvideo_bttnpause-primary::after {
+    content: '';
+    opacity: 0;
+    transition: opacity 0.6s;
+    -webkit-transition: opacity 0.6s;
+    -moz-transition: opacity 0.6s;
+}
+.cycvideo_bttnpause-primary:hover:before,
+.cycvideo_bttnpause-primary:focus:before {    
+  transform: scale(1.1);
+  -webkit-transform: scale(1.1);
+  -moz-transform: scale(1.1);
+}
+.cycvideo_bttnpause-primary {
+  border-color: transparent;
+}
+.cycvideo_bttnpause-primary:after {
+  content: '';
+  opacity: 1;
+  width: 9px;
+  height: 16px;
+  background: #e8f8f9;
+  position: absolute;
+  right:3px;
+  top:-8px;
+  border-left: 4px sold #e8f8f9;
+  box-shadow: inset 6px 0 0 0 transparent;  
+}

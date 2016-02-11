@@ -1,0 +1,21 @@
+/* Filename: cycvideo_labelindicator.less  
+ * Timestamp: 2016.02.11-13:54:06 (last modified)
+ * Author(s): bumblehead <chris@bumblehead.com>  
+ */
+
+.cycvideo_labelindicator {
+    color:#fff;
+    font-size:14px;
+    display:inline-block;
+    vertical-align:middle;
+    margin:0 0 0 6px;
+}
+.cycvideo_labelindicator_seektime,
+.cycvideo_labelindicator_fulltime {
+    display:inline-block;
+}
+.cycvideo_labelindicator_seektime::after {
+    margin:0 4px;
+    content : "/";
+    display:inline-block;
+}

@@ -1,0 +1,64 @@
+/* Filename: cycvideo_bttnspeaker.less  
+ * Timestamp: 2016.02.11-14:22:33 (last modified)
+ * Author(s): bumblehead <chris@bumblehead.com>  
+ */
+
+.cycvideo_bttnspeaker{
+    position:relative;
+    display:inline-block;
+    vertical-align:middle;
+    width:30px;
+    height:26px;
+}
+
+/*THE ARTIFAKT ;) */
+.cycvideo_bttnspeaker_icon{
+	width:0; 
+	height:0;
+	background:none;
+	border-top:12px solid transparent;
+	border-bottom:12px solid transparent; 
+	border-right:16px solid #e8f8f9;
+	
+}
+/* body
+ */
+.cycvideo_bttnspeaker_icon:before{
+	content:"";
+	position:absolute;
+	top:8px;
+	left:0;
+        width:18px;
+        height:8px;
+        /*
+	width:5.8em;
+	height:2.5em;
+        */
+	background:#e8f8f9;
+        border-radius:3px 2px 2px 3px;
+	/*border-radius:3px 1.5em 1.5em 3px;*/
+}
+.cycvideo_bttnspeaker_icon:after{
+	content:"";
+	position:absolute;
+	border-right:3px solid #e8f8f9;
+	border-radius:50%;
+	/*animation*/
+
+        top:2px;
+        right:6px;
+    	/*top:-30px;
+	right:-60px;
+       */
+	width:20px;
+	height:20px;
+        
+        /*
+	-webkit-animation:pump 0.1s 0.1s infinite alternate;
+	   -moz-animation:pump 0.1s 0.1s infinite alternate;
+	    -ms-animation:pump 0.1s 0.1s infinite alternate;
+	     -o-animation:pump 0.1s 0.1s infinite alternate;
+	     animation:pump 0.1s 0.1s infinite alternate;
+       */
+
+}
