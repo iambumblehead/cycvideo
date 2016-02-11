@@ -1,5 +1,5 @@
 // Filename: index.js  
-// Timestamp: 2016.02.10-19:02:39 (last modified)
+// Timestamp: 2016.02.11-13:00:38 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>
 
 
@@ -27,7 +27,11 @@ scroungejs.build({
   publicpath     : './www',    
   iscompressed   : false,
   isconcatenated : true,
-  basepage       : './demo/index.html',  
+  basepage       : './demo/index.html',
+  embedarr       : [{
+    filepath : 'rx-dom/dist/rx.dom.js',
+    content  : 'if (typeof window === "object") window.Rx = rx_407_dist_rxall;'
+  }],
   treearr        : [
     'cycvideo.js',
     'cycvideo.css'
@@ -40,7 +44,7 @@ scroungejs.build({
 // Error.stackTraceLimit = Infinity;
 const log = console.log,
       app    = express(),
-      mvisrc = require.resolve('../src/cycvideo'),
+      mvisrc = require.resolve('../src/cycvideo_mvi'),
       DOM    = cycledom.makeHTMLDriver(),
       main   = ({ DOM }) => ({ DOM: mvi(DOM) });
 
