@@ -1,5 +1,5 @@
 // Filename: cycvideo_video.js  
-// Timestamp: 2016.02.10-15:08:36 (last modified)
+// Timestamp: 2016.02.11-15:24:18 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>  
 
 var cycledom = require('@cycle/dom');
@@ -21,10 +21,12 @@ var cycvideo = module.exports = (function (o) {
 
   o.view = function (state$, opts, playstate, blob, wharr) {
     var video = cycledom.video;
+
+    console.log('return constructed view$');
     
     return state$.map(
       (vals) => {
-
+        console.log('return constructed vdom$');
         o.setplaystate(opts, playstate);
         
         return video('.cycvideo_video#:uidcycvideo_video'.replace(/:uid/, opts.uid), {

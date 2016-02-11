@@ -1,6 +1,9 @@
 cycvideo
+========
 
-nothing to see here
+Experimental video player using trendy reactive programming, es6, Rx.js, and cycle.js.
+
+nothing to see here yet.
 
 <!--
 https://github.com/tc39/ecma262
