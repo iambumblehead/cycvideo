@@ -1,5 +1,5 @@
 // Filename: cycvideo_bttngroup.js  
-// Timestamp: 2016.02.10-15:11:31 (last modified)
+// Timestamp: 2016.02.11-17:21:14 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>
 
 var Rx = require('rx-dom');
@@ -12,14 +12,10 @@ var cycvideo_bttngroupminmax = module.exports = (function (o) {
   o.view = function (state$, minmaxstate) {
     var div = cycledom.div;
     
-    return state$.map(
-      (vals) => {
-        return div('.cycvideo_bttngroupminmax.cycvideo_bttngroupminmax-'+minmaxstate+'#uidcycvideo_bttngroup', [
-          cycvideo_bttnmaximize.view(state$),
-          cycvideo_bttnminimize.view(state$)
-        ]);
-      }
-    );
+    return div('.cycvideo_bttngroupminmax.cycvideo_bttngroupminmax-'+minmaxstate+'#uidcycvideo_bttngroup', [
+      cycvideo_bttnmaximize.view(state$),
+      cycvideo_bttnminimize.view(state$)
+    ]);
   };
 
   o.streams = function (DOM, opts) {

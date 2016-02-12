@@ -1,5 +1,5 @@
 // Filename: cycvideo_slategroup.js  
-// Timestamp: 2016.02.10-14:39:04 (last modified)
+// Timestamp: 2016.02.11-17:24:37 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>
 
 var Rx = require('rx-dom');
@@ -13,15 +13,11 @@ var cycvideo_stategroup = module.exports = (function (o) {
   o.view = function (state$, opts, playstate, progress) {
     var div = cycledom.div;
     
-    return state$.map(
-      (vals) => {
-        return div('.cycvideo_slategroup.cycvideo_slategroup-'+playstate+'#uidcycvideo_slategroup', [
-          cycvideo_slateload.view(state$, progress),
-          cycvideo_slateplay.view(state$),        
-          cycvideo_slatepause.view(state$)
-        ]);
-      }
-    );
+    return div('.cycvideo_slategroup.cycvideo_slategroup-'+playstate+'#uidcycvideo_slategroup', [
+      cycvideo_slateload.view(state$, progress),
+      cycvideo_slateplay.view(state$),        
+      cycvideo_slatepause.view(state$)
+    ]);
   };
 
   o.streams = function (DOM, opts) {

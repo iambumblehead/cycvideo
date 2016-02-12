@@ -1,5 +1,5 @@
 // Filename: cycvideo_dropvrmode.js  
-// Timestamp: 2016.02.10-15:14:09 (last modified)
+// Timestamp: 2016.02.11-17:23:42 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>  
 
 
@@ -24,20 +24,17 @@ var cycvideo_dropvrmode = module.exports = (function (o) {
       id    : 'cube'
     }];
     
-    return state$.map(
-      vals =>
-        label('.cycvideo_dropvrmode#uidcycvideo_dropvrmode', [
-          span('.cycvideo_dropvrmode_label_primary'),
-          select('.cycvideo_dropvrmode_select#uidcycvideo_dropvrmode', {
-            name : "vrmode"
-          }, list.map(
-            data =>
-              option({
-                value : data.label,
-                selected : data.label === 'vrmode' ? 'selected' : ''
-              }, data.label)))
-        ])
-    );
+    return label('.cycvideo_dropvrmode#uidcycvideo_dropvrmode', [
+      span('.cycvideo_dropvrmode_label_primary'),
+      select('.cycvideo_dropvrmode_select#uidcycvideo_dropvrmode', {
+        name : "vrmode"
+      }, list.map(
+        data =>
+          option({
+            value : data.label,
+            selected : data.label === 'vrmode' ? 'selected' : ''
+          }, data.label)))
+    ]);
   };
 
   return o;

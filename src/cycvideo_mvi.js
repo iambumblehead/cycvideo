@@ -1,5 +1,5 @@
 // Filename: cycvideo_mvi.js  
-// Timestamp: 2016.02.11-15:27:03 (last modified)
+// Timestamp: 2016.02.11-17:31:07 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>
 
 var rx = require('rx-dom');
@@ -28,6 +28,16 @@ var cycvideo_opts = require('./cycvideo_opts');
 //   Input: DOM Driver source
 //   Output: Action Observables
 //
+// * model() function
+//   Purpose: manage state
+//   Input: Action Observables
+//   Output: state$ Observable
+//
+// * view() function
+//   Purpose: visually represent state from the Model
+//   Input: state$ Observable
+//   Output: Observable of VTree as the DOM Driver sink
+//
 var cycvideo = module.exports = (function (o) {
 
 
@@ -47,26 +57,21 @@ var cycvideo = module.exports = (function (o) {
       url : opts.srcarr[0]
     });
 
-
-    blob$.subscribe(
-      function (e) { console.log('blog$ next ' + e); },
-      function (e) { console.log('blog$ error %s', e); },
-      function (e) { console.log('blog$ complete ', e); }
-    );
-
+    // You are subscribing to some of your streams inside your application code.
+    // I assume this is for debugging but you should shareReplay() those
+    // streams. otherwise the driver might miss some items that happen before
+    // it has a chance to subscribe
+    //blob$.subscribe(
+    //  function (e) { console.log('blog$ next ' + e); },
+    //  function (e) { console.log('blog$ error %s', e); },
+    //  function (e) { console.log('blog$ complete ', e); }
+    //);
 
     var progress$ = blob$.map((ev) => {
       return typeof ev === 'object' ? Math.floor((ev.loaded/ev.total) * 100) : 100;
       //}).startWith(0).debounce(600).map(v => typeof document === 'object' ? v : 0);
       //}).startWith(0).throttle(600).map(v => typeof document === 'object' ? v : 0);    
     }).startWith(0).map(v => typeof document === 'object' ? v : 0);
-
-    progress$.subscribe(
-      function (e) { console.log('progress$ progress ', e); },
-      function (e) { console.log('progress$ error %s', e); },
-      function ()  { console.log('progress$ complete'); }
-    );
-    
 
     // 'progress', 'timeupdate', 'canplay', 'play', 'pause'
     // seek, includes progress and seek area
@@ -118,19 +123,11 @@ var cycvideo = module.exports = (function (o) {
       seek$       : seek$,
       minmaxgroup$ : minmaxgroup$,
       wharr$ : wharr$ 
-      //wharr$      : rx.Observable.just([640, 480])
     };
   }
 
-  // * model() function
-  //   Purpose: manage state
-  //   Input: Action Observables
-  //   Output: state$ Observable
-  //
   function model(actions) {
-    console.log('set blob start');
-    
-    var model$ = rx.Observable.combineLatest(
+    return rx.Observable.combineLatest(
       actions.opt$,
       actions.playstate$.startWith('load'),
       actions.progress$.startWith(0),
@@ -152,29 +149,15 @@ var cycvideo = module.exports = (function (o) {
         return {opts, playstate, progress, blob, buffer, seek,  wharr, minmaxgroup, fillmode, vrmode};    
       }
     );
-
-    model$.subscribe(
-      function (e) { console.log('model$ progress ', e); },
-      function (e) { console.log('model$ error %s', e); },
-      function ()  { console.log('model$ complete'); }
-    );
-    
-    return model$;
   }
 
 
-  // * view() function
-  //   Purpose: visually represent state from the Model
-  //   Input: state$ Observable
-  //   Output: Observable of VTree as the DOM Driver sink
-  //
+
   // load cat video
   // observe the statestream
   function view(state$) {
     var div = cycledom.div;
 
-    console.log('construct view$');
-    
     return state$.map(function (o) {
       var opts = o.opts,
           playstate = o.playstate,
@@ -186,8 +169,6 @@ var cycvideo = module.exports = (function (o) {
           minmaxgroup = o.minmaxgroup,
           fillmode = o.fillmode,
           vrmode = o.vrmode;
-
-      console.log('update vdom ', blob);
       
       return div('.cycvideo', [
         cycvideo_video.view(state$, opts, playstate, blob, wharr),

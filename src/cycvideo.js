@@ -1,5 +1,5 @@
 // Filename: cycvideo.js  
-// Timestamp: 2016.02.11-15:09:09 (last modified)
+// Timestamp: 2016.02.11-17:18:59 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>
 
 var cyclecore = require('@cycle/core'),
@@ -8,6 +8,15 @@ var cyclecore = require('@cycle/core'),
 
 cyclecore.run(obj => {
   return {DOM: cycvideo_mvi(obj.DOM).skip(1)};
+  /*
+  var dom$ = cycvideo_mvi(obj.DOM).map(function (e) {
+    console.log('dom$ udpated ', e);
+    
+    return e;
+  });
+        
+  return {DOM: dom$ };
+   */
 }, {
   DOM: cycledom.makeDOMDriver('#root')
 });

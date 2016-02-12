@@ -1,5 +1,5 @@
 // Filename: cycvideo_bttngroup.js  
-// Timestamp: 2016.02.10-13:55:27 (last modified)
+// Timestamp: 2016.02.11-17:21:01 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>
 
 var rx = require('rx-dom');
@@ -15,15 +15,11 @@ var cycvideo_bttngroup = module.exports = (function (o) {
   o.view = function (state$, playstate) {
     var div = cycledom.div;
     
-    return state$.map(
-      (vals) => {
-        return div('.cycvideo_bttngroup.cycvideo_bttngroup-'+playstate+'#uidcycvideo_bttnplay', [
-          cycvideo_bttnplay.view(state$),
-          cycvideo_bttnpause.view(state$),
-          cycvideo_bttnload.view(state$)
-        ]);
-      }
-    );
+    return div('.cycvideo_bttngroup.cycvideo_bttngroup-'+playstate+'#uidcycvideo_bttnplay', [
+      cycvideo_bttnplay.view(state$),
+      cycvideo_bttnpause.view(state$),
+      cycvideo_bttnload.view(state$)
+    ]);
   };
 
   o.streams = function (DOM, opts) {

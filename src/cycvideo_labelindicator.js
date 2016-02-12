@@ -1,5 +1,5 @@
 // Filename: cycvideo_labelindicator.js  
-// Timestamp: 2016.02.10-14:36:21 (last modified)
+// Timestamp: 2016.02.11-17:24:10 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>  
 
 
@@ -15,15 +15,11 @@ var cycvideo_labelindicator = module.exports = (function (o) {
           label = cycledom.label,
           span = cycledom.span;
 
-    //console.log('format is ', format);
-    return state$.map(
-      vals =>
-        label('.cycvideo_labelindicator', [
-          span('.cycvideo_labelindicator_seektime', seektime),
-          span('.cycvideo_labelindicator_fulltime', fulltime)
-        ])
-    );
-  }
+    return label('.cycvideo_labelindicator', [
+      span('.cycvideo_labelindicator_seektime', seektime),
+      span('.cycvideo_labelindicator_fulltime', fulltime)
+    ]);
+  };
 
   return o;
 

@@ -1,5 +1,5 @@
 // Filename: cycvideo_video.js  
-// Timestamp: 2016.02.11-15:24:18 (last modified)
+// Timestamp: 2016.02.11-16:37:53 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>  
 
 var cycledom = require('@cycle/dom');
@@ -22,25 +22,18 @@ var cycvideo = module.exports = (function (o) {
   o.view = function (state$, opts, playstate, blob, wharr) {
     var video = cycledom.video;
 
-    console.log('return constructed view$');
+    o.setplaystate(opts, playstate);
     
-    return state$.map(
-      (vals) => {
-        console.log('return constructed vdom$');
-        o.setplaystate(opts, playstate);
-        
-        return video('.cycvideo_video#:uidcycvideo_video'.replace(/:uid/, opts.uid), {
-          crossOrigin : 'anonymous',
-          playsinline : 'playsinline',        
-          src         : typeof blob === 'string' ? blob : '',
-          //'http://d8d913s460fub.cloudfront.net/videoserver/cat-test-video-320x240.mp4',
-          width       : opts.wharr[0],
-          height      : opts.wharr[1],
-          autoplay    : state$.autoplay,
-          poster      : state$.poster || '',
-          loop        : state$.loop
-        });
-      });
+    return video('.cycvideo_video#:uidcycvideo_video'.replace(/:uid/, opts.uid), {
+      crossOrigin : 'anonymous',
+      playsinline : 'playsinline',        
+      src         : typeof blob === 'string' ? blob : '',
+      width       : opts.wharr[0],
+      height      : opts.wharr[1],
+      autoplay    : state$.autoplay,
+      poster      : state$.poster || '',
+      loop        : state$.loop
+    });
   };
 
   return o;

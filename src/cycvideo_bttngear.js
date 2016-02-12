@@ -1,5 +1,5 @@
 // Filename: cycvideo_bttngear.js  
-// Timestamp: 2016.02.10-13:57:02 (last modified)
+// Timestamp: 2016.02.11-17:20:40 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>  
 
 var cycledom = require('@cycle/dom'),
@@ -11,11 +11,9 @@ var cycvideo_bttngear = module.exports = (function (o) {
     var label = cycledom.label,
         span = cycledom.span;
     
-    return state$.map(
-      vals =>
-        label('.cycvideo_bttngear', [
-          span('.cycvideo_bttngear-primary')
-        ]));
+    return label('.cycvideo_bttngear', [
+      span('.cycvideo_bttngear-primary')
+    ]);
   };
 
   o.streams = function (DOM, opts) {

@@ -1,5 +1,5 @@
 // Filename: cycvideo_bttnpause.js  
-// Timestamp: 2016.02.10-13:59:45 (last modified)
+// Timestamp: 2016.02.11-17:21:38 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>
 //
 // not really a button.
@@ -13,11 +13,9 @@ var cycvideo_bttnload = module.exports = (function (o) {
     var label = cycledom.label,
         span = cycledom.span;
     
-    return state$.map(
-      vals =>
-        label('.cycvideo_bttnload', [
-          span('.cycvideo_bttnload-primary')
-        ]));
+    return label('.cycvideo_bttnload', [
+      span('.cycvideo_bttnload-primary')
+    ]);
   };
 
   o.streams = function (DOM, opts) {

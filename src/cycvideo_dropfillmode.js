@@ -1,5 +1,5 @@
 // Filename: cycvideo_dropfillmode.js  
-// Timestamp: 2016.02.10-15:12:16 (last modified)
+// Timestamp: 2016.02.11-17:23:16 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>  
 
 var cycledom = require('@cycle/dom');
@@ -23,9 +23,7 @@ var cycvideo_dropfillmode = module.exports = (function (o) {
       id    : 'fill'
     }];
 
-    return state$.map(
-      vals =>
-        label('.cycvideo_dropfillmode#uidcycvideo_dropfillmode', [
+    return label('.cycvideo_dropfillmode#uidcycvideo_dropfillmode', [
           span('.cycvideo_dropfillmode_label_primary'),
           select('.cycvideo_dropfillmode_select#uidcycvideo_dropfillmode', {
             name : "name"
@@ -35,8 +33,7 @@ var cycvideo_dropfillmode = module.exports = (function (o) {
                 value : data.label,
                 selected : data.label === fillmode ? 'selected' : ''
               }, data.label)))
-        ])
-    );
+    ]);
   };
 
   return o;
