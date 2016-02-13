@@ -1,5 +1,5 @@
 // Filename: cycvideo_req.js  
-// Timestamp: 2016.02.10-14:37:40 (last modified)
+// Timestamp: 2016.02.11-19:04:56 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>
 //
 // https://github.com/Reactive-Extensions/RxJS/blob/ \
@@ -21,11 +21,13 @@ var cycvideo_req = module.exports = (function (o) {
           url = opts.url,
           blob;
 
+
       xhr.open("GET", url, true);
       xhr.responseType = 'blob';
       xhr.onreadystatechange = xdrgo.constructReadyState(xhr, function (xhr) {
         if (xdrgo.is2xxRe.test(xhr.status)) {
           blob = (window.webkitURL ? window.URL || webkitURL : URL).createObjectURL(xhr.response);
+          console.log('complete ', fn);
           fn(null, blob);
         } else {
           fn(xhr);
@@ -33,7 +35,8 @@ var cycvideo_req = module.exports = (function (o) {
       });
 
       xhr.onprogress = progressfn;
-      xhr.send();
+        xhr.send();
+
     });
   };
 

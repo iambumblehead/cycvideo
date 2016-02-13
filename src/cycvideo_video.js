@@ -1,5 +1,5 @@
 // Filename: cycvideo_video.js  
-// Timestamp: 2016.02.11-16:37:53 (last modified)
+// Timestamp: 2016.02.11-18:08:13 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>  
 
 var cycledom = require('@cycle/dom');
@@ -19,7 +19,7 @@ var cycvideo = module.exports = (function (o) {
     }
   };
 
-  o.view = function (state$, opts, playstate, blob, wharr) {
+  o.view = function (opts, playstate, blob) {
     var video = cycledom.video;
 
     o.setplaystate(opts, playstate);
@@ -30,9 +30,9 @@ var cycvideo = module.exports = (function (o) {
       src         : typeof blob === 'string' ? blob : '',
       width       : opts.wharr[0],
       height      : opts.wharr[1],
-      autoplay    : state$.autoplay,
-      poster      : state$.poster || '',
-      loop        : state$.loop
+      autoplay    : opts.autoplay,
+      poster      : opts.poster || '',
+      loop        : opts.loop
     });
   };
 

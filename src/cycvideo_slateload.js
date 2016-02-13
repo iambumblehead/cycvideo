@@ -1,5 +1,5 @@
 // Filename: cycvideo_slateload.js  
-// Timestamp: 2016.02.11-17:25:06 (last modified)
+// Timestamp: 2016.02.11-18:09:21 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>  
 
 var Rx = require('rx-dom');
@@ -7,7 +7,7 @@ var cycledom = require('@cycle/dom');
 
 var cycvideo_slateload = module.exports = (function (o) {
 
-  o.view = function (state$, progress) {
+  o.view = function (progress) {
     var div = cycledom.div;
     
     return  div('.cycvideo_slateload', [
