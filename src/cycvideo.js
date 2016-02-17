@@ -1,5 +1,5 @@
 // Filename: cycvideo.js  
-// Timestamp: 2016.02.16-16:38:23 (last modified)
+// Timestamp: 2016.02.16-22:53:08 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>
 
 var cyclecore = require('@cycle/core'),

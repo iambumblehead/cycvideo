@@ -1,5 +1,5 @@
 // Filename: cycvideo_mvi.js  
-// Timestamp: 2016.02.16-16:49:36 (last modified)
+// Timestamp: 2016.02.17-02:45:39 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>
 
 var rx = require('rx-dom');
@@ -74,11 +74,21 @@ var cycvideo = module.exports = (function (o) {
     if (typeof document === 'object') {
       const BLOB_URL = 'http://d8d913s460fub.cloudfront.net/videoserver/';
 
-      blob$ = sources.HTTP
-        .filter(res$ => res$.request.url.indexOf(BLOB_URL) === 0)
-        .mergeAll()
-        .map(res => (window.webkitURL ? window.URL || webkitURL : URL).createObjectURL(res.xhr.response))
-        .startWith('');
+      const blobhttp$ = sources.HTTP.mergeAll().filter(
+        res => res.request.url.indexOf(BLOB_URL) === 0
+      );
+      
+      blob$ = blobhttp$.filter(
+        res => res.xhr && res.xhr.response
+      ).map(
+        res => (window.webkitURL ? window.URL || webkitURL : URL).createObjectURL(res.xhr.response)
+      ).startWith('');
+      
+      progress$ = blobhttp$.filter(
+        res => typeof res.total === 'number'
+      ).map(
+        res => res.total ? res.loaded / res.total * 100 : 0
+      );
     }
 
     //if (typeof document === 'object') {
@@ -268,15 +278,26 @@ var cycvideo = module.exports = (function (o) {
       })))); },
 
     HTTP : function (sources) {
-      var videoblob$ = rx.Observable.just('');    
+      var videoblob$ = rx.Observable.just(''),
+          progress$ = rx.Observer.create(
+            function next (e) {
+              var per = e.total && e.loaded / e.total * 100;
+              console.log('prog Next: ' + per);
+              return per;
+            }
+          );
+      
       if (typeof document === 'object') {
         //videoblob$ = sources.DOM.select('#root').events('click').map(() => {
         videoblob$ = rx.Observable.just({
-          url    : 'http://d8d913s460fub.cloudfront.net/videoserver/cat-test-video-320x240.mp4',
-          type   : 'blob',
-          method : 'GET'
+          url      : 'http://d8d913s460fub.cloudfront.net/videoserver/cat-test-video-320x240.mp4',
+          type     : 'blob',
+          method   : 'GET',
+          progress : true
         });
       }
+
+      //return rx.Observable.merge(videoblob$, _progress$);      
       return videoblob$;
     }
   }; 
