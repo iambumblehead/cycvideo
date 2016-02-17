@@ -1,5 +1,5 @@
 // Filename: index.js  
-// Timestamp: 2016.02.16-22:45:51 (last modified)
+// Timestamp: 2016.02.17-10:57:38 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>
 
 var fs = require('fs'),
@@ -33,9 +33,9 @@ scroungejs.build({
   iscompressed   : false,
   isconcatenated : true,
   basepage       : './demo/index.html',
-  embedarr       : [{
-    filepath : 'rx-dom/dist/rx.dom.js',
-    content  : 'if (typeof window === "object") window.Rx = rx_408_dist_rxall;'
+  globalarr  : [{
+    filepath : 'rx/dist/rx.all.js',
+    name     : 'Rx'
   }],
   treearr        : [
     'cycvideo.js',
