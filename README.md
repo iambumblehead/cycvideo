@@ -55,5 +55,14 @@ they need to be cold or hot observable.
 [3]: https://github.com/Cmdv/cycle-natural-language-search/blob/master/src/client/dialogue/components/search-bar/searchbar-model.js#L5-L12
 [4]: https://github.com/Cmdv/cycle-natural-language-search/blob/master/src/client/dialogue/components/search-bar/searchbar-model.js#L14-L17
 [5]: https://github.com/Cmdv/cycle-natural-language-search/blob/master/src/client/dialogue/components/search-bar/searchbar-view.js#L4
+
+
+todo:
+
+ * add webvr icon
+   http://codepen.io/davatron5000/pen/IKAxb 
+ * get changes to superagent and cycle/core merged
+ * begin adding support for theatre mode and fullscreen mode
+ * add scale animation to button hover states?
 -->
 

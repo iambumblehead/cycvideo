@@ -1,5 +1,5 @@
 // Filename: cycvideo_mvi.js  
-// Timestamp: 2016.02.17-02:45:39 (last modified)
+// Timestamp: 2016.02.17-11:57:59 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>
 
 var rx = require('rx-dom');
@@ -8,6 +8,7 @@ var cycvideo_bttngroup = require('./cycvideo_bttngroup');
 var cycvideo_bttngear = require('./cycvideo_bttngear');
 var cycvideo_bttnspeaker = require('./cycvideo_bttnspeaker');
 var cycvideo_bttntheater = require('./cycvideo_bttntheater');
+var cycvideo_bttncc = require('./cycvideo_bttncc');
 var cycvideo_slategroup = require('./cycvideo_slategroup');
 var cycvideo_bttngroupminmax = require('./cycvideo_bttngroupminmax');
 var cycvideo_labelindicator = require('./cycvideo_labelindicator');
@@ -238,6 +239,7 @@ var cycvideo = module.exports = (function (o) {
               cycvideo_labelindicator.view(state$, buffer)
             ]),
             div('.cycvideo_ctrls_colright', [
+              cycvideo_bttncc.view(state$, minmaxgroup),              
               cycvideo_bttnspeaker.view(state$, minmaxgroup),
               cycvideo_bttngear.view(state$, minmaxgroup),            
               cycvideo_bttntheater.view(state$, minmaxgroup),
@@ -254,27 +256,27 @@ var cycvideo = module.exports = (function (o) {
 
     DOM : sources => {
       return view(model(intent(sources, cycvideo_opts({
-      uid : 1,
-      wharr : [
-        // http://stackoverflow.com/questions/4129102/html5-video-dimensions
-        // ^^^ would be preferable
-        
-        // 1280, 720 // Sample.mp4
-        640, 320 // for testdrive 2:1 format
-      ],
-      srcarr : [
-        'http://d8d913s460fub.cloudfront.net/videoserver/cat-test-video-320x240.mp4'
-        //'./testdrive.mp4' + '?' + Date.now
-      ],
-      istesting   : true,
-      isstats     : true,
-      isxhrloaded : true,
-      iscontrols  : false,
-      autoplay    : false,
-      loop        : true
-      //poster : feed.getProgramFittedThumbnail(program, videoelem),
-      //fillmode : cyclvideo_opts.fillmode_fill,
-      //vrmode   : cyclvideo_opts.vrmode_panorama
+        uid : 1,
+        wharr : [
+          // http://stackoverflow.com/questions/4129102/html5-video-dimensions
+          // ^^^ would be preferable
+          
+          // 1280, 720 // Sample.mp4
+          640, 320 // for testdrive 2:1 format
+        ],
+        srcarr : [
+          'http://d8d913s460fub.cloudfront.net/videoserver/cat-test-video-320x240.mp4'
+          //'./testdrive.mp4' + '?' + Date.now
+        ],
+        istesting   : true,
+        isstats     : true,
+        isxhrloaded : true,
+        iscontrols  : false,
+        autoplay    : false,
+        loop        : true
+        //poster : feed.getProgramFittedThumbnail(program, videoelem),
+        //fillmode : cyclvideo_opts.fillmode_fill,
+        //vrmode   : cyclvideo_opts.vrmode_panorama
       })))); },
 
     HTTP : function (sources) {

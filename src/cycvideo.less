@@ -1,7 +1,8 @@
 /* Filename: cycvideo.less  
- * Timestamp: 2016.02.11-13:52:42 (last modified)
+ * Timestamp: 2016.02.17-11:47:36 (last modified)
  * Author(s): bumblehead <chris@bumblehead.com>  
  */
+
 
 .cycvideo {
     position:relative;
@@ -10,7 +11,14 @@
 
     font-family:HelveticaNeue-Light,"Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,sans-serif;
     font-weight:400;
+    box-sizing: content-box;
 }
+.cyclevideo *,
+.cyclevideo *:before,
+.cyclevideo *:after {
+    box-sizing: inherit;
+}
+
 
 .cycvideo_ctrls {
     transition-delay: 0.3s;
@@ -33,7 +41,7 @@
 }
 
 .cycvideo .cycvideo_ctrls {
-    opacity:0;
+    /*opacity:0;*/
 }
 .cycvideo:hover .cycvideo_ctrls {
     opacity:1;    

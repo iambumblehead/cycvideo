@@ -1,5 +1,5 @@
 /* Filename: cycvideo_slideseek.less  
- * Timestamp: 2016.02.11-14:47:06 (last modified)
+ * Timestamp: 2016.02.17-11:50:15 (last modified)
  * Author(s): bumblehead <chris@bumblehead.com>  
  */
 
@@ -13,7 +13,7 @@
 
 .cycvideo_slideseek_progress {
     position:absolute;
-    width: calc(100% - 6px);
+    width: ~"calc(100% - 6px)";
     top:0;left:3px;right:3px;
     margin:7px 0 0 0;
     padding:0;
@@ -72,7 +72,8 @@ input[type=range]::-webkit-slider-thumb {
     border-radius: 50%;
     /*background: goldenrod;*/
     background: #b0d168;
-    margin-top: -4px;
+    /*margin-top: -4px;*/
+    margin-top:-2px;
 }
 .cycvideo_slideseek:hover input[type=range]::-webkit-slider-thumb {
     opacity:1;
