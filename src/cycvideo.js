@@ -1,5 +1,5 @@
 // Filename: cycvideo.js  
-// Timestamp: 2016.02.12-14:55:35 (last modified)
+// Timestamp: 2016.02.16-16:38:23 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>
 
 var cyclecore = require('@cycle/core'),
@@ -7,24 +7,15 @@ var cyclecore = require('@cycle/core'),
     cycledom = require('@cycle/dom'),
     cycvideo_mvi = require('./cycvideo_mvi');
 
-cyclecore.run(obj => {
+// main should be modifed to use configurations from server
+// or client which provide access to http or filesystem accordingly...
+cyclecore.run(function main (sources) {
+  // http://cycle.js.org/drivers.html
   return {
-    DOM: cycvideo_mvi(obj.DOM).skip(1)
-  };
-  /*
-  var dom$ = cycvideo_mvi(obj.DOM).map(function (e) {
-    console.log('dom$ udpated ', e);
-    
-    return e;
-  });
-        
-  return {DOM: dom$ };
-   */
+    DOM: cycvideo_mvi.DOM(sources),
+    HTTP: cycvideo_mvi.HTTP(sources)    
+  };  
 }, {
-  HTTP: cyclehttp.makeHTTPDriver(),
-  DOM: cycledom.makeDOMDriver('#root')
+  DOM: cycledom.makeDOMDriver('#root'),
+  HTTP: cyclehttp.makeHTTPDriver()
 });
-
-
-
-

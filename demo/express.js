@@ -1,9 +1,9 @@
 // Filename: index.js  
-// Timestamp: 2016.02.11-13:00:38 (last modified)
+// Timestamp: 2016.02.16-16:16:49 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>
 
-
-var express = require('express'),
+var fs = require('fs'),
+    express = require('express'),
     morgan = require('morgan'),
     favicon = require('serve-favicon'),
     bodyParser = require('body-parser'),
@@ -13,13 +13,18 @@ var express = require('express'),
     errorhandler = require('errorhandler'),
     methodOverride = require('method-override'),
     scroungejs = require('scroungejs'),
-    http = require('http'),
-    port = 3000,
-    app;
-
-var fs = require('fs');
-var cyclecore = require('@cycle/core');
-var cycledom = require('@cycle/dom');
+    cyclecore = require('@cycle/core'),
+    cycledom = require('@cycle/dom'),
+    http   = require('http'),
+    port   = 3000,
+    app    = express(),    
+    mvisrc = require.resolve('../src/cycvideo_mvi'),
+    mvi    = require(mvisrc),
+    DOM    = cycledom.makeHTMLDriver(),
+    main   = (sources) => ({
+      DOM: mvi.DOM(sources),
+      HTTP: mvi.HTTP(sources)        
+    });
 
 scroungejs.build({
   inputpath      : './src/',
@@ -39,66 +44,11 @@ scroungejs.build({
 }, function (err, res) {
   if (err) throw new Error(err);
 
-  console.log('build done?', err, res);
-
-// Error.stackTraceLimit = Infinity;
-const log = console.log,
-      app    = express(),
-      mvisrc = require.resolve('../src/cycvideo_mvi'),
-      DOM    = cycledom.makeHTMLDriver(),
-      main   = ({ DOM }) => ({ DOM: mvi(DOM) });
-
-var mvi = require(mvisrc);
-
   app.use(bodyParser.urlencoded({ extended: false }));
   app.use(bodyParser.json());
   app.use(cookieParser());
 
-
-  /*
-  app.engine('.html', function (fpath, data, fn) {
-    console.log('engine path');
-    
-    cyclecore.run(main, { DOM }).sources.DOM.forEach(ssr => {
-      fs.readFile('./demo/index.html', 'utf-8', function (err, content) {
-        res.end(content.replace(/__ssr__/, ssr));
-      });    
-    }, fn);
-  });
-
-  app.use(methodOverride());
-  app.use(compression());
-
-  app.use('/www', express.static(__dirname + '/../www/'));
-  // how is index attached at gani?
-  
-
-  //app.use('/', express.static(__dirname + '/'));
-  //app.use('/', serveIndex(__dirname + '/'));
-
-  // express' template path, path to index.html
-  app.set('views', __dirname + '/');
-  //app.set('view engine', 'html');
-  app.set('view options', {
-    layout : false
-  });
-   */
-
-  
-/*
-router.get('/', (req, res, next) => {
-  run(main, { DOM }).sources.DOM.forEach(ssr => {
-    fs.readFile('./src/html/index.html', 'utf-8', function (err, content) {
-      res.end(content.replace(/__ssr__/, ssr));
-    });    
-  }, next);
-});
-*/
-
-  //var router = express.Router();
   app.get('/', function (req, res, fn) {
-    console.log('engine path');
-    
     cyclecore.run(main, { DOM }).sources.DOM.forEach(ssr => {
       fs.readFile('./demo/index.html', 'utf-8', function (err, content) {
         res.end(content.replace(/__ssr__/, ssr));
@@ -106,19 +56,14 @@ router.get('/', (req, res, next) => {
     }, fn);
   });
 
-  //app.use(router).use(__dirname + '/www', express.static('/../www'));
   app.use('/www', express.static(__dirname + '/../www'));  
-
   app.use(errorhandler({
     dumpExceptions : true, 
     showStack : true
   }));  
   
-app.listen(port, 'localhost', err => {
-  if (err) return console.err(err);
-
-  log(`listening on http://localhost:${ port }`);
-});
-
-
+  app.listen(port, 'localhost', err => {
+    if (err) console.err(err);
+    else console.log(`listening on http://localhost:${ port }`);
+  });
 });
