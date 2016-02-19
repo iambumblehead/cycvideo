@@ -37,7 +37,7 @@
     "domwh" : "^0.0.5",
     "domev" : "~0.0.x",
     "ismobilejs" : "~0.3.x",
-    
+    "winurl": "^0.0.1",    
     "rx-dom": "^7.0.3",
     "fromnodeprogresscallback": "^0.0.1",
     "xdrgo": "^0.0.1",

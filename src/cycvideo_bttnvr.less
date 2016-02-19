@@ -1,0 +1,106 @@
+/* Filename: cycvideo_bttnvr.less  
+ * Timestamp: 2016.02.18-15:10:51 (last modified)
+ * Author(s): bumblehead <chris@bumblehead.com>  
+ */
+
+/*
+.cycvideo_bttnvr:after {
+    background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNHB4IiBoZWlnaHQ9IjI0cHgiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI0ZGRkZGRiI+CiAgICA8cGF0aCBkPSJNMjAuNzQgNkgzLjIxQzIuNTUgNiAyIDYuNTcgMiA3LjI4djEwLjQ0YzAgLjcuNTUgMS4yOCAxLjIzIDEuMjhoNC43OWMuNTIgMCAuOTYtLjMzIDEuMTQtLjc5bDEuNC0zLjQ4Yy4yMy0uNTkuNzktMS4wMSAxLjQ0LTEuMDFzMS4yMS40MiAxLjQ1IDEuMDFsMS4zOSAzLjQ4Yy4xOS40Ni42My43OSAxLjExLjc5aDQuNzljLjcxIDAgMS4yNi0uNTcgMS4yNi0xLjI4VjcuMjhjMC0uNy0uNTUtMS4yOC0xLjI2LTEuMjh6TTcuNSAxNC42MmMtMS4xNyAwLTIuMTMtLjk1LTIuMTMtMi4xMiAwLTEuMTcuOTYtMi4xMyAyLjEzLTIuMTMgMS4xOCAwIDIuMTIuOTYgMi4xMiAyLjEzcy0uOTUgMi4xMi0yLjEyIDIuMTJ6bTkgMGMtMS4xNyAwLTIuMTMtLjk1LTIuMTMtMi4xMiAwLTEuMTcuOTYtMi4xMyAyLjEzLTIuMTNzMi4xMi45NiAyLjEyIDIuMTMtLjk1IDIuMTItMi4xMiAyLjEyeiIvPgogICAgPHBhdGggZmlsbD0ibm9uZSIgZD0iTTAgMGgyNHYyNEgwVjB6Ii8+Cjwvc3ZnPgo=');
+    width:20px;
+    height:20px;
+    margin:0 4px;
+    display: inline-block;
+    vertical-align:middle;
+    color:#e8f8f9;
+    content: " ";
+}
+*/
+
+/* max size 30x 30
+ */
+
+.cycvideo_bttnvr {
+    position: relative;
+    width:32px;
+    height:16px;
+    /*
+  width: 212px;
+  height: 65px;
+*/
+  
+  display: inline-block;
+  vertical-align:middle;
+}
+.cycvideo_bttnvr:hover .glass {
+/*    background-color:#e8f8f9;*/
+/*    
+  background-image: -webkit-linear-gradient(top, #ff7660, #ff427d 70%);
+  background-image: linear-gradient(to bottom, #ff7660, #ff427d 70%);
+*/
+}
+.cycvideo_bttnvr .g-top {
+  position: absolute;
+  height: 6px;
+  /*width: 18px;*/
+  width:24px;
+  background-color: #e8f8f9;
+  /*background-color: #3C3C3C;*/
+  /*
+  top: 5px;
+  left: -5px;*/
+  /*border-radius: 5px;*/
+
+  /*top:1px;*/
+  top:0;
+  left:4px;
+  border-radius: 2px;
+}
+.cycvideo_bttnvr_bridge {
+    position: absolute;
+    top:5px;
+    left:8px;
+    background-color:#e8f8f9;
+    width:12px;
+    height:5px;
+}
+
+.cycvideo_bttnvr .glass {
+    position: absolute;
+    /*
+  height: 65px;
+  width: 90px;
+   */
+    height:5px;
+    /*width:10px;*/
+    width:2px;
+  /*background-color:#e8f8f9;*/
+  /*
+  background-image: -webkit-linear-gradient(top, #4DE2DC, #3888D1 70%);
+  background-image: linear-gradient(to bottom, #4DE2DC, #3888D1 70%);
+ */
+  /*border: 10px solid #e8f8f9;*/
+    border: 5px solid #e8f8f9;
+    border-left: 6px solid #e8f8f9;
+    border-right: 6px solid #e8f8f9;
+    border-bottom: 5px solid #e8f8f9;
+  /*border: 10px solid #3C3C3C;*/
+  top: 0;
+}
+.cycvideo_bttnvr .g-left {
+    left: 0;
+    /*
+  -webkit-transform: rotate(2deg);
+          transform: rotate(2deg);
+*/
+    /*border-radius: 12px 12px 33px 29px;*/
+    border-radius: 1px 1px 2px 2px;
+}
+.cycvideo_bttnvr .g-right {
+    left: 18px;
+    /*
+  -webkit-transform: rotate(-2deg);
+          transform: rotate(-2deg);
+   */
+    /*border-radius: 12px 12px 29px 33px;*/
+    border-radius: 1px 1px 2px 2px;
+}

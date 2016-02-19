@@ -1,5 +1,5 @@
 // Filename: cycvideo_req.js  
-// Timestamp: 2016.02.11-19:04:56 (last modified)
+// Timestamp: 2016.02.17-14:42:31 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>
 //
 // https://github.com/Reactive-Extensions/RxJS/blob/ \
@@ -35,7 +35,7 @@ var cycvideo_req = module.exports = (function (o) {
       });
 
       xhr.onprogress = progressfn;
-        xhr.send();
+      xhr.send();
 
     });
   };

@@ -1,5 +1,5 @@
 // Filename: cycvideo_dom.js  
-// Timestamp: 2016.02.10-14:21:01 (last modified)
+// Timestamp: 2016.02.17-15:19:21 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>  
 
 var cycvideo_dom = module.exports = (function (o) {
@@ -9,7 +9,7 @@ o.is_doc = function () {
 };
 
 o.get_elem = function (cfg, id) {
-  return document.getElementById(cfg.uid + id);
+  return document.getElementById(id + cfg.uid);
 };
 
 o.get_video_elem = function (player) {

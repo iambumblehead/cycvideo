@@ -1,14 +1,17 @@
 // Filename: cycvideo_mvi.js  
-// Timestamp: 2016.02.17-11:57:59 (last modified)
+// Timestamp: 2016.02.18-17:14:33 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>
 
 var rx = require('rx-dom');
+var winurl = require('winurl');
 var cycledom = require('@cycle/dom');
+var cycvideo_aspect = require('./cycvideo_aspect');
 var cycvideo_bttngroup = require('./cycvideo_bttngroup');
 var cycvideo_bttngear = require('./cycvideo_bttngear');
 var cycvideo_bttnspeaker = require('./cycvideo_bttnspeaker');
 var cycvideo_bttntheater = require('./cycvideo_bttntheater');
 var cycvideo_bttncc = require('./cycvideo_bttncc');
+var cycvideo_bttnvr = require('./cycvideo_bttnvr');
 var cycvideo_slategroup = require('./cycvideo_slategroup');
 var cycvideo_bttngroupminmax = require('./cycvideo_bttngroupminmax');
 var cycvideo_labelindicator = require('./cycvideo_labelindicator');
@@ -82,7 +85,7 @@ var cycvideo = module.exports = (function (o) {
       blob$ = blobhttp$.filter(
         res => res.xhr && res.xhr.response
       ).map(
-        res => (window.webkitURL ? window.URL || webkitURL : URL).createObjectURL(res.xhr.response)
+        res => winurl.createObjectURL(res.xhr.response)
       ).startWith('');
       
       progress$ = blobhttp$.filter(
@@ -130,12 +133,17 @@ var cycvideo = module.exports = (function (o) {
 
     // 'progress', 'timeupdate', 'canplay', 'play', 'pause'
     // seek, includes progress and seek area
+
+    /*
     var timeupdate$ = rx.Observable.merge(
       typeof document === 'object' ?
         rx.DOM.fromEvent(cycvideo_dom.get_video_elem(opts), 'timeupdate') :
         sources.DOM.select('#cycvideo_video').events('timeupdate')
     ).filter(ev => ev && ev.target);
+     */
 
+
+    var timeupdate$ = sources.DOM.select('#cycvideo_video1').events('timeupdate').filter(e => e && e.target);
     var slideseekstreams = cycvideo_slideseek.streams(sources.DOM, opts);
     var seekfocus$ = slideseekstreams.focus$.map(ev => 'pause');
 
@@ -224,9 +232,16 @@ var cycvideo = module.exports = (function (o) {
           minmaxgroup = o.minmaxgroup,
           fillmode = o.fillmode,
           vrmode = o.vrmode;
-    
-      return div('.cycvideo', [
-        cycvideo_video.view(opts, playstate, blob, wharr),
+
+      // simple for now
+      var maximizeClassName = '.ismaximized-' + (minmaxgroup === 'maximized' ? true : false);
+      var fittedClassName = '.isfitted-' + (fillmode === 'fitted' ? true : false);
+      //var aspectClassName = '.isaspect-' + (fillmode === 'fitted' ? true : false);
+      var aspectClassName = '.isaspect-' + cycvideo_aspect.nearestaspect(o.wharr);
+
+      
+      return div('#cycvideo' + opts.uid + '.cycvideo' + maximizeClassName + fittedClassName + aspectClassName, [
+        cycvideo_video.view(opts, playstate, blob, minmaxgroup, fillmode, wharr),
         cycvideo_slategroup.view(opts, playstate, progress),
         
         div('.cycvideo_ctrls', [
@@ -239,6 +254,7 @@ var cycvideo = module.exports = (function (o) {
               cycvideo_labelindicator.view(state$, buffer)
             ]),
             div('.cycvideo_ctrls_colright', [
+              cycvideo_bttnvr.view(state$, minmaxgroup),
               cycvideo_bttncc.view(state$, minmaxgroup),              
               cycvideo_bttnspeaker.view(state$, minmaxgroup),
               cycvideo_bttngear.view(state$, minmaxgroup),            
@@ -262,7 +278,8 @@ var cycvideo = module.exports = (function (o) {
           // ^^^ would be preferable
           
           // 1280, 720 // Sample.mp4
-          640, 320 // for testdrive 2:1 format
+          //640, 320 // for testdrive 2:1 format
+          640, 480 // cat video
         ],
         srcarr : [
           'http://d8d913s460fub.cloudfront.net/videoserver/cat-test-video-320x240.mp4'
@@ -280,22 +297,16 @@ var cycvideo = module.exports = (function (o) {
       })))); },
 
     HTTP : function (sources) {
-      var videoblob$ = rx.Observable.just(''),
-          progress$ = rx.Observer.create(
-            function next (e) {
-              var per = e.total && e.loaded / e.total * 100;
-              console.log('prog Next: ' + per);
-              return per;
-            }
-          );
+      var videoblob$ = rx.Observable.just('');
       
       if (typeof document === 'object') {
         //videoblob$ = sources.DOM.select('#root').events('click').map(() => {
         videoblob$ = rx.Observable.just({
-          url      : 'http://d8d913s460fub.cloudfront.net/videoserver/cat-test-video-320x240.mp4',
-          type     : 'blob',
-          method   : 'GET',
-          progress : true
+          url : 'http://d8d913s460fub.cloudfront.net/videoserver/cat-test-video-320x240.mp4',
+          method : 'GET',
+          progress : true,
+          type : '',
+          responseType : 'blob'
         });
       }
 

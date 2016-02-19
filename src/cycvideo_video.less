@@ -1,8 +1,24 @@
 /* Filename: cycvideo_video.less  
- * Timestamp: 2016.02.11-14:00:33 (last modified)
+ * Timestamp: 2016.02.18-15:59:42 (last modified)
  * Author(s): bumblehead <chris@bumblehead.com>  
  */
 
 .cycvideo_video {
     background-color: #e8f8f9;    
+}
+
+/* position depends upon aspect ratio
+ */
+.cycvideo_video.ismaximized-true {
+    background-color:#000;
+    width:100vw;
+    display:inline-block;
+    /*margin-top: ~"calc(50% - 60px)";*/
+    /*height:100vh;*/
+}
+
+
+.cycvideo_video.ismaximized-true.isaspect-4x3 {
+    margin-top: ~"calc(50% - 25vw)";
+    /*margin-top:25vw;*/
 }

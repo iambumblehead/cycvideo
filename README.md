@@ -60,9 +60,25 @@ they need to be cold or hot observable.
 todo:
 
  * add webvr icon
-   http://codepen.io/davatron5000/pen/IKAxb 
+   http://codepen.io/davatron5000/pen/IKAxb
+ * add "back" button icon
  * get changes to superagent and cycle/core merged
  * begin adding support for theatre mode and fullscreen mode
  * add scale animation to button hover states?
--->
+ * plugin in user opts to to theatre fullscreen mode
+ * add vrmodes to cycvideo namespace
+ * create webkit url
 
+winurl(), returns URL or webkitURL interface from window
+https://developer.mozilla.org/en-US/docs/Web/API/URL
+
+
+sequence of events at player result in obscure hard to replicate chrome but
+
+ finish css goggles
+ change placement of sound
+ add widescreen effect
+
+'top' may always be set by fitted region which is aware of dimensions
+
+-->

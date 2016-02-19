@@ -1,5 +1,5 @@
 // Filename: cycvideo_aspect.js  
-// Timestamp: 2016.02.10-15:40:27 (last modified)
+// Timestamp: 2016.02.18-16:57:04 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>
 
 var domwh = require('domwh');
@@ -77,6 +77,12 @@ var cycvideo_aspect = module.exports = (function (o) {
     return wharr;
   };
 
+  o.nearestaspect = function (wharr, windowwharr) {
+    if (o.iswharr_true4x3(wharr)) return '4x3';
+    if (o.iswharr_true19x9(wharr)) return '19x9';
+    if (o.iswharr_true2x1(wharr)) return '2x1';        
+  };
+
   o.nearestwindow_truewh = function (wharr, windowwharr) {
     windowwharr = domwh.window();
     
@@ -91,17 +97,23 @@ var cycvideo_aspect = module.exports = (function (o) {
     return wharr;
   };
 
-  o.wharr_scaledtofit = function (wharr, whboundarr) {
-    var w = +whboundarr[0],
-        h = Math.floor(wharr[1] * (whboundarr[0] / wharr[0]));
+  o.wharr_scaledtofit = function (wharr, whboundarr, w, h) {
+    whboundarr = domwh.window();
+    
+    w = +whboundarr[0],
+    h = Math.floor(wharr[1] * (whboundarr[0] / wharr[0]));
 
     if (!o.iswharr_fit([w, h], whboundarr)) {
       h = +whboundarr[1];
       w = Math.floor(wharr[0] * (whboundarr[1] / wharr[1]));
     }
-
+    
     return [w, h];
   };
+
+  if (typeof window === 'object') {
+    window.aspectd = o;
+  }
 
   return o;
 

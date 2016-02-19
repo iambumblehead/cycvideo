@@ -1,5 +1,5 @@
 // Filename: cycvideo.js  
-// Timestamp: 2016.02.16-22:53:08 (last modified)
+// Timestamp: 2016.02.17-13:23:30 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>
 
 var cyclecore = require('@cycle/core'),
@@ -17,5 +17,6 @@ cyclecore.run(function main (sources) {
   };  
 }, {
   DOM: cycledom.makeDOMDriver('#root'),
+  //DOM: cycledom.makeHTMLDriver('#root'),
   HTTP: cyclehttp.makeHTTPDriver()
 });
