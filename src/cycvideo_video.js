@@ -1,5 +1,5 @@
 // Filename: cycvideo_video.js  
-// Timestamp: 2016.02.18-17:14:00 (last modified)
+// Timestamp: 2016.02.19-12:23:34 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>  
 
 var domwh = require('domwh');
@@ -22,11 +22,11 @@ var cycvideo = module.exports = (function (o) {
   };
 
   // 100vw 100vh for full screen
-  o.view = function (opts, playstate, blob, minmaxmode, fillmode, wharr) {
+  o.view = function (opts, playstate, blob, ismaximized, istheatered, wharr) {
     var video = cycledom.video;
 
-    var maximizeClassName = '.ismaximized-' + (minmaxmode === 'maximized' ? true : false);
-    var fittedClassName = '.isfitted-' + (fillmode === 'fitted' ? true : false);
+    var maximizeClassName = '.ismaximized-' + ismaximized;
+    var fittedClassName = '.isfitted-' + istheatered;
       //var aspectClassName = '.isaspect-' + (fillmode === 'fitted' ? true : false);
     var aspectClassName = '.isaspect-' + cycvideo_aspect.nearestaspect(wharr);
 
@@ -34,7 +34,7 @@ var cycvideo = module.exports = (function (o) {
 
     o.setplaystate(opts, playstate);
 
-    if (typeof window === 'object' && minmaxmode === 'maximized') {
+    if (typeof window === 'object' && ismaximized) {
       var finwharr = cycvideo_aspect.wharr_scaledtofit(wharr, domwh(document.getElementById('cycvideo' + opts.uid)));
     } else {
       var finwharr = wharr;
@@ -44,7 +44,7 @@ var cycvideo = module.exports = (function (o) {
     
     return video('.cycvideo_video:viewmodeclass#cycvideo_video:uid'.replace(/:viewmodeclass/, viewmodeclass).replace(/:uid/g, opts.uid), {
       style: {
-        marginTop : minmaxmode === 'maximized' ? 'calc(50vh - ' + (finwharr[1] / 2) + 'px)' : ''
+        marginTop : ismaximized ? 'calc(50vh - ' + (finwharr[1] / 2) + 'px)' : ''
       },
       crossOrigin : 'anonymous',
       playsinline : 'playsinline',        
@@ -57,6 +57,14 @@ var cycvideo = module.exports = (function (o) {
       poster      : opts.poster || '',
       loop        : opts.loop
     });
+  };
+
+  o.streams = function (DOM, opts) {
+    return {
+      timeupdate$ : DOM.select('#cycvideo_video1')
+        .events('timeupdate')
+        .filter(e => e && e.target)
+    };
   };
 
   return o;

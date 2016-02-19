@@ -1,5 +1,5 @@
 // Filename: index.js  
-// Timestamp: 2016.02.17-10:57:38 (last modified)
+// Timestamp: 2016.02.19-13:58:49 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>
 
 var fs = require('fs'),
@@ -16,10 +16,9 @@ var fs = require('fs'),
     cyclecore = require('@cycle/core'),
     cycledom = require('@cycle/dom'),
     http   = require('http'),
+    mvi    = require('../src/cycvideo_mvi'),
     port   = 3000,
     app    = express(),    
-    mvisrc = require.resolve('../src/cycvideo_mvi'),
-    mvi    = require(mvisrc),
     DOM    = cycledom.makeHTMLDriver(),
     main   = (sources) => ({
       DOM: mvi.DOM(sources),
@@ -37,7 +36,7 @@ scroungejs.build({
     filepath : 'rx/dist/rx.all.js',
     name     : 'Rx'
   }],
-  treearr        : [
+  treearr : [
     'cycvideo.js',
     'cycvideo.css'
   ]
@@ -56,7 +55,8 @@ scroungejs.build({
     }, fn);
   });
 
-  app.use('/www', express.static(__dirname + '/../www'));  
+  //app.use('/cfg', express.static(__dirname + '/cfg'));
+  app.use('/www', express.static(__dirname + '/../www'));
   app.use(errorhandler({
     dumpExceptions : true, 
     showStack : true

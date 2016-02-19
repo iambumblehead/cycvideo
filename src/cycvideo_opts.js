@@ -1,5 +1,5 @@
 // Filename: cycvideo_opts.js  
-// Timestamp: 2016.02.10-14:36:39 (last modified)
+// Timestamp: 2016.02.19-11:05:50 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>
 
 var cycvideo_aspect = require('./cycvideo_aspect');
@@ -122,7 +122,9 @@ var cycvideo_opts = module.exports = (function (o) {
     finopt.istesting    = o.getasbool(opt.istesting, true);
     finopt.iscaptions   = o.getasbool(opt.iscaptions, true);
     finopt.iscontrols   = o.getasbool(opt.iscontrols, true);
-    finopt.isfullscreen = o.getasbool(opt.isfullscreen, false);    
+    //finopt.isfullscreen = o.getasbool(opt.isfullscreen, false);
+    finopt.ismaximized  = o.getasbool(opt.ismaximized, false);
+    finopt.istheatered  = o.getasbool(opt.istheatered, false);    
     finopt.autoplay     = o.getasbool(opt.autoplay, true);
     finopt.loop         = o.getasbool(opt.loop, true);        
     

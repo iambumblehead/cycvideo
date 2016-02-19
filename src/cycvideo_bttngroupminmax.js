@@ -1,27 +1,38 @@
 // Filename: cycvideo_bttngroup.js  
-// Timestamp: 2016.02.11-17:21:14 (last modified)
+// Timestamp: 2016.02.19-11:40:02 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>
 
 var Rx = require('rx-dom');
-var cycvideo_bttnmaximize = require('./cycvideo_bttnmaximize');
-var cycvideo_bttnminimize = require('./cycvideo_bttnminimize');
 var cycledom = require('@cycle/dom');
 
+// change to maximized...
 var cycvideo_bttngroupminmax = module.exports = (function (o) {
 
-  o.view = function (state$, minmaxstate) {
-    var div = cycledom.div;
+  o.view = function (state$, ismaximized) {
+    var div = cycledom.div,
+        span = cycledom.span,
+        label = cycledom.label;        
     
-    return div('.cycvideo_bttngroupminmax.cycvideo_bttngroupminmax-'+minmaxstate+'#uidcycvideo_bttngroup', [
-      cycvideo_bttnmaximize.view(state$),
-      cycvideo_bttnminimize.view(state$)
+    return div('.cycvideo_bttngroupminmax.cycvideo_bttnismaximized-'+ismaximized+'#uidcycvideo_bttngroup', [
+      label('.cycvideo_bttnmaximize', [
+        span('.cycvideo_bttnmaximize_tl'),
+        span('.cycvideo_bttnmaximize_tr'),
+        span('.cycvideo_bttnmaximize_br'),
+        span('.cycvideo_bttnmaximize_bl')
+      ]),
+      label('.cycvideo_bttnminimize', [
+        span('.cycvideo_bttnminimize_tl'),
+        span('.cycvideo_bttnminimize_tr'),
+        span('.cycvideo_bttnminimize_br'),
+        span('.cycvideo_bttnminimize_bl')
+      ]),
     ]);
   };
 
   o.streams = function (DOM, opts) {
     return Rx.Observable.merge(
-      cycvideo_bttnmaximize.streams(DOM, opts).click.map(ev => 'maximized'),
-      cycvideo_bttnminimize.streams(DOM, opts).click.map(ev => 'minimized')    
+      DOM.select('.cycvideo_bttnmaximize').events('click').map(e => true),
+      DOM.select('.cycvideo_bttnminimize').events('click').map(e => false)
     );
   };
 

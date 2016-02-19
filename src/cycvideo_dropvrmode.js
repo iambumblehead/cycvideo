@@ -1,5 +1,5 @@
 // Filename: cycvideo_dropvrmode.js  
-// Timestamp: 2016.02.11-17:23:42 (last modified)
+// Timestamp: 2016.02.19-11:05:08 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>  
 
 
@@ -7,7 +7,7 @@ var cycledom = require('@cycle/dom');
 
 var cycvideo_dropvrmode = module.exports = (function (o) {
 
-  o.view = function (state$, fillmode) {
+  o.view = function (state$, isvrmode) {
     var label = cycledom.label,
         span = cycledom.span,
         select = cycledom.select,

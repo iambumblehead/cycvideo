@@ -1,5 +1,5 @@
 // Filename: cycvideo_bttntheater.js  
-// Timestamp: 2016.02.11-17:22:48 (last modified)
+// Timestamp: 2016.02.19-10:56:58 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>  
 
 var cycledom = require('@cycle/dom');
@@ -18,9 +18,8 @@ var cycvideo_bttntheater = module.exports = (function (o) {
   };
 
   o.streams = function (DOM, opts) {
-    return {
-      click : DOM.select('.cycvideo_bttntheater').events('click')
-    };
+    return DOM.select('.cycvideo_bttntheater').events('click').map(e => true);
+      //.events('change').pluck('target', 'value');
   };
   
   return o;

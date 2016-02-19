@@ -1,7 +1,26 @@
-/* Filename: cycvideo_bttnmaximize.less  
- * Timestamp: 2016.02.11-14:01:52 (last modified)
+/* Filename: cycvideo_bttngroupminmax.less  
+ * Timestamp: 2016.02.19-11:38:20 (last modified)
  * Author(s): bumblehead <chris@bumblehead.com>  
  */
+
+.cycvideo_bttngroupminmax:before {
+    content: " ";
+    display:inline-block;
+    width:10px;
+    height:36px;
+    vertical-align:middle;
+}
+.cycvideo_bttngroupminmax .cycvideo_bttnminimize,
+.cycvideo_bttngroupminmax .cycvideo_bttnmaximize {
+    display:none;
+}
+.cycvideo_bttnismaximized-true .cycvideo_bttnminimize,
+.cycvideo_bttnismaximized-false .cycvideo_bttnmaximize {
+    display:inline-block;
+}
+
+
+
 
 .cycvideo_bttnmaximize {
     width:26px;
@@ -62,7 +81,7 @@
 .cycvideo_bttnmaximize:hover .cycvideo_bttnmaximize_bl {
     bottom:0;left:0;
 }
-
+/*
 .cycvideo_bttngroupminmax:before {
     content: " ";
     display:inline-block;
@@ -70,6 +89,7 @@
     height:36px;
     vertical-align:middle;
 }
+*/
 .cycvideo_bttntheater {
     margin-left:6px;
 }
@@ -77,6 +97,7 @@
 .cycvideo_bttngroupminmax {
     display:inline-block;
 }
+/*
 .cycvideo_bttngroupminmax .cycvideo_bttnminimize,
 .cycvideo_bttngroupminmax .cycvideo_bttnmaximize {
     display:none;
@@ -85,6 +106,7 @@
 .cycvideo_bttngroupminmax-minimized .cycvideo_bttnmaximize {
     display:inline-block;
 }
+*/
 .cycvideo_bttnminimize {
     /*border: 2px solid #fff;*/
     /*width:32px;*/
@@ -152,3 +174,7 @@
 .cycvideo_bttnminimize:hover .cycvideo_bttnminimize_bl {
     bottom:1px;left:1px;
 }
+
+
+
+

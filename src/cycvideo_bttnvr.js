@@ -1,5 +1,5 @@
 // Filename: cycvideo_bttnvr.js  
-// Timestamp: 2016.02.18-15:07:10 (last modified)
+// Timestamp: 2016.02.19-11:07:40 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>  
 
 var cycledom = require('@cycle/dom');
@@ -18,9 +18,7 @@ var cycvideo_bttnvr = module.exports = (function (o) {
   };
 
   o.streams = function (DOM, opts) {
-    return {
-      click : DOM.select('.cycvideo_bttnvr').events('click')
-    };
+    return DOM.select('.cycvideo_bttnvr').events('click').map(e => true);
   };
 
   return o;
