@@ -26,14 +26,13 @@
     "mocha": "^2.3.2",
     "morgan": "1.5.1",
     "serve-favicon": "2.2.0",
-    
-    "scroungejs" : "^0.8.99",
+    "scroungejs" : "^0.9.1",
     "serve-index": "1.6.1"    
   },
   "dependencies": {
-    "@cycle/core": "^6.0.0",
-    "@cycle/http": "^8.0.0",    
-    "@cycle/dom": "^9.0.1",
+    "@cycle/core": "^6.0.3",
+    "@cycle/http": "^8.2.0",    
+    "@cycle/dom": "^9.1.0",
     "domwh" : "^0.0.5",
     "domev" : "~0.0.x",
     "ismobilejs" : "~0.3.x",

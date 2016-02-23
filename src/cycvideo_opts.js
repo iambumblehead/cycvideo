@@ -1,5 +1,5 @@
 // Filename: cycvideo_opts.js  
-// Timestamp: 2016.02.19-11:05:50 (last modified)
+// Timestamp: 2016.02.22-17:20:59 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>
 
 var cycvideo_aspect = require('./cycvideo_aspect');
@@ -32,70 +32,7 @@ var cycvideo_opts = module.exports = (function (o) {
 
     return defval;
   };
-/*
-  o.fillmodearr = [
-    o.fillmode_fitted = "fillmode-fitted",
-    o.fillmode_full   = "fillmode-full",
-    o.fillmode_fill   = "fillmode-fill"    
-  ];  
 
-  o.vrmodearr = [
-    o.vrmode_flat = {
-      id    : 'vrmode_flat',
-      label : 'flat',
-      type  : 'flat'
-    },
-    o.vrmode_panorama = {
-      id    : 'vrmode_panorama',
-      label : 'sphere', // narrow label, sphere vs panorama
-      type  : 'vr',
-      scene : fsgoplayer_webvrscene.panorama
-    },
-    o.vrmode_cube = {
-      id    : 'vrmode_cube',
-      label : 'cube',      
-      type  : 'vr',
-      scene : fsgoplayer_webvrscene.cube
-    },
-    o.vrmode_block = {
-      id    : 'vrmode_block',
-      label : 'block',
-      type  : 'vr',
-      scene : fsgoplayer_webvrscene.block
-    },
-    o.vrmode_light = {
-      id    : 'vrmode_light',
-      label : 'light',
-      type  : 'vr',
-      scene : fsgoplayer_webvrscene.lightmap
-    },
-    o.vrmode_blend = {
-      id    : 'vrmode_blend', // blender
-      label : 'blend',
-      type  : 'vr',
-      scene : fsgoplayer_webvrscene.blend
-    },
-    o.vrmode_three = {
-      id    : 'vrmode_three', // blender
-      label : 'three',
-      type  : 'vr',
-      scene : fsgoplayer_webvrscene.three
-    },
-    o.vrmode_scene = {
-      id    : 'vrmode_scene', // blender, a full scene
-      label : 'scene',
-      type  : 'vr',
-      scene : fsgoplayer_webvrscene.scene
-    }
-  ];
-
-  o.getvrmodebyid = function (id) {
-    for (var arr = o.vrmodearr, x = arr.length; x--;) {
-      if (arr[x].id === id) return arr[x];
-    }
-    //return fsgoplayer_webvrscene[id.split('vrmode-')[1]];
-  };
-*/  
   o.get = function (opt) {
     var finopt = {};
 

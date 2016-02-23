@@ -1,5 +1,5 @@
 // Filename: index.js  
-// Timestamp: 2016.02.19-13:58:49 (last modified)
+// Timestamp: 2016.02.22-16:07:49 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>
 
 var fs = require('fs'),
@@ -20,6 +20,10 @@ var fs = require('fs'),
     port   = 3000,
     app    = express(),    
     DOM    = cycledom.makeHTMLDriver(),
+
+    cyclehttp = require('@cycle/http'),
+    HTTP    = cyclehttp.makeHTTPDriver(),
+    
     main   = (sources) => ({
       DOM: mvi.DOM(sources),
       HTTP: mvi.HTTP(sources)        
@@ -48,7 +52,10 @@ scroungejs.build({
   app.use(cookieParser());
 
   app.get('/', function (req, res, fn) {
-    cyclecore.run(main, { DOM }).sources.DOM.forEach(ssr => {
+    cyclecore.run(main, {
+      DOM : DOM,
+      HTTP : HTTP
+    }).sources.DOM.forEach(ssr => {
       fs.readFile('./demo/index.html', 'utf-8', function (err, content) {
         res.end(content.replace(/__ssr__/, ssr));
       });    

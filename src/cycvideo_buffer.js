@@ -1,8 +1,17 @@
 // Filename: cycvideo_buffer.js  
-// Timestamp: 2016.02.10-14:12:45 (last modified)
+// Timestamp: 2016.02.22-16:37:47 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>  
 
 var cycvideo_buffer = module.exports = (function (o) {
+
+  o.get_buffer_state = function (opt) {
+    return {
+      load_percent : opt.load_percent || 0.0,
+      seek_percent : opt.seek_percent || 0.0,
+      timess_duration : opt.timess_duration || 0,
+      timess_current  : opt.timess_current  || 0
+    };
+  };
 
   // http://stackoverflow.com/questions/9754527/what-does-the-video-buffered-length-exactly-tells
   //
@@ -31,16 +40,14 @@ var cycvideo_buffer = module.exports = (function (o) {
   // https://developer.mozilla.org/en-US/Apps/Build/Audio_and_video_delivery/buffering_seeking_time_ranges
   // http://stackoverflow.com/questions/5029519/html5-video-percentage-loaded
   //
-  o.get_buffer_state = function (videoelem) {
+  o.get_buffer_state_videoelem = function (videoelem) {
     var range = 0,
         bf = videoelem.buffered,
         time = videoelem.currentTime,
-        stateobj = {
-          load_percent : 0.0,
-          seek_percent : 0.0,
+        stateobj = o.get_buffer_state({
           timess_duration : videoelem.duration,
           timess_current : time
-        };
+        });
     
     if (o.buffer_is_buffered_parts(videoelem)) {
       range = (function next(range, bufbgn, bufend) {
