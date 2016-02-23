@@ -1,5 +1,5 @@
 // Filename: cycvideo_video.js  
-// Timestamp: 2016.02.22-16:58:57 (last modified)
+// Timestamp: 2016.02.22-18:03:52 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>  
 
 var domwh = require('domwh');
@@ -52,6 +52,9 @@ var cycvideo = module.exports = (function (o) {
           '.isaspect-' + cycvideo_aspect.nearestaspect(wharr),
         finwharr = ismaximized ?
           cycvideo_aspect.wharr_scaledtofit(wharr, domwh(document.getElementById('cycvideo' + opts.uid))) : wharr;
+
+
+    console.log('wharr is ', wharr);
     
     o.setplaystate(opts, playstate);
 

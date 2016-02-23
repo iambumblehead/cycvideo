@@ -1,10 +1,12 @@
 // Filename: cycvideo_buffer.js  
-// Timestamp: 2016.02.22-16:37:47 (last modified)
+// Timestamp: 2016.02.22-17:52:36 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>  
 
 var cycvideo_buffer = module.exports = (function (o) {
 
-  o.get_buffer_state = function (opt) {
+  o.get_buffer_state = (opt) => {
+    opt = opt || {};
+    
     return {
       load_percent : opt.load_percent || 0.0,
       seek_percent : opt.seek_percent || 0.0,

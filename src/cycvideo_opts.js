@@ -1,5 +1,5 @@
 // Filename: cycvideo_opts.js  
-// Timestamp: 2016.02.22-17:20:59 (last modified)
+// Timestamp: 2016.02.22-18:06:54 (last modified)
 // Author(s): bumblehead <chris@bumblehead.com>
 
 var cycvideo_aspect = require('./cycvideo_aspect');
@@ -46,24 +46,29 @@ var cycvideo_opts = module.exports = (function (o) {
     finopt.poster = o.getasstring(opt.poster, '');    
     
     finopt.srcarr = o.getasarr(opt.srcarr, []);
-      
-    if (typeof window === 'object') {
-      finopt.wharr = o.getasarr(opt.wharr && cycvideo_aspect.nearestwindow_truewh(opt.wharr), [640,480]);              
-      finopt.isxhrloaded  = o.getasbool(opt.isxhrloaded, ismobilejs.apple.phone);
-    } else {
-      finopt.wharr = o.getasarr(opt.wharr, [640, 480]);
-      finopt.isxhrloaded  = false;
-    }
     
     finopt.isstats      = o.getasbool(opt.isstats, false);    
     finopt.istesting    = o.getasbool(opt.istesting, true);
     finopt.iscaptions   = o.getasbool(opt.iscaptions, true);
     finopt.iscontrols   = o.getasbool(opt.iscontrols, true);
-    //finopt.isfullscreen = o.getasbool(opt.isfullscreen, false);
     finopt.ismaximized  = o.getasbool(opt.ismaximized, false);
     finopt.istheatered  = o.getasbool(opt.istheatered, false);    
     finopt.autoplay     = o.getasbool(opt.autoplay, true);
-    finopt.loop         = o.getasbool(opt.loop, true);        
+    finopt.loop         = o.getasbool(opt.loop, true);
+
+    if (typeof window === 'object') {
+      if (finopt.istheatered) {
+        finopt.wharr = o.getasarr(opt.wharr && cycvideo_aspect.nearestwindow_truewh(opt.wharr), [640,480]);
+      } else {
+        finopt.wharr = o.getasarr(opt.wharr, [640, 480]);
+      }
+
+      finopt.isxhrloaded  = o.getasbool(opt.isxhrloaded, ismobilejs.apple.phone);
+    } else {
+      finopt.wharr = o.getasarr(opt.wharr, [640, 480]);
+      finopt.isxhrloaded  = false;
+    }
+
     
     return finopt;
   };
